@@ -238,6 +238,115 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/10/my-new-post/" itemprop="url">
+                  遗留问题的解答（自适应/浮动清除/边距)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-10T21:31:35+08:00" content="2016-07-10">
+              2016-07-10
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="高度自适应"><a href="#高度自适应" class="headerlink" title="高度自适应"></a>高度自适应</h3><p>　　自适应我们分为两部分来说。首先是文字内容自适应DIV高度。<br>  在这种情况下，一般有两种途径能够解决。<br>  1：第一种方法是设置最低的高度<br>  <pre><code>_height: 200px;/<em>仅IE6需要设别此属性，假定最低高度是200PX，设置内容超出后会自动撑开行高</em>/<br> min-height:200px;/<em>css最小高度为200px，支持除IE6以外浏览器</em>/</code></pre><br> 2：第二种方法是同时设定两个DIV，最小高度均为200px，当内容较少时DIV盒子的高度是200px，当内容超出时，DIV可以自适应高度，两个DIV进行同样的设置：<br> <pre><code>div{_height:200px; min-height:200px; border:1px solid #000; width:100px}<br>/<em> css注释：设置最小高度，border边框，宽度 </em>/ </code></pre></p>
+<p>　　接下来是图片大小的自适应。<br>  css2中用到的方法是运用判断表达式来进行图片大小的自适应。而在css3中能够用background-size来解决。<br>  background-size语法解析如下：</p>
+<ol>
+<li>length,percentage。根据跟定长度值或者百分比来调整背景图片大小。auto为默认值。<br>冒号后的第一个值是宽度，第二个值是高度。（均不能为负值）<br>假如只给一个值，则第二个值自动为”auto”；<br>假如指定为百分比值，那么背景图的大小是根据相对的背景区域来作调整。而背景区域是根据background-origin属性来决定的。<br>（padding-box    背景图像相对于内边距框来定位<br>border-box       背景图像相对于边框盒来定位<br>cotent-box       背景图像相对于内容框来定位）<ol>
+<li>contain。 <pre><code>div { background-size: contain; }</code></pre>它的效果按比例将图片缩放到最大尺寸以使其高宽都在背景区域里面，其主要用在背景图片比容器大的情况下。（使用该值时，图片可能发生扭曲）</li>
+<li>cover。 <pre><code>div { background-size: cover; }</code></pre>它的效用是按比例将图片缩放到最小尺寸以使其完整覆盖背景区域，其主要用在背景图片比容器小的情况下。（使用该值也可能是图片扭曲。<br>　　通过以上3种设置方法，能够实现图片的自适应。</li>
+</ol>
+</li>
+</ol>
+<h3 id="浮动清除"><a href="#浮动清除" class="headerlink" title="浮动清除"></a>浮动清除</h3><p>　　当我们进行DIV嵌套后，又对子级的DIV设置了浮动后。父级DIV就会因为子级DIV脱离普通文档流而坍塌。那么我们如何解决这个问题呢？有如下两种方法：<br>  1.第一种方法是使用 overflow:hidden.<br> 它有两个作用。第一个作用是：当属性规定的内容溢出元素框时，将内容修剪，并且其余内容是不可见的。（注意，若内容有绝对定位，则该属性不能对其进行修剪）<br> 第二个作用就是浮动清除了。给父级添加了overflow:hidden后，子级的浮动会被清除，从而自适应内容的高度。</p>
+<ol>
+<li>第二种方法是使用clear：both属性。<br>那么这里我们用网上一个经典的例子来说明吧:<br><img src="1.png" alt=""><br>但是这种方法也有缺点，即添加了没有意义的DIV标签。<br>（其实通过计算去设定父级DIV的高度也可以实现效果，但是这样就无法自适应了。）</li>
+</ol>
+<h3 id="边距的问题"><a href="#边距的问题" class="headerlink" title="边距的问题"></a>边距的问题</h3><p>　　那么最后这个问题就开门见山的解释了。这是我在学习盒模型，自己实验时发现的问题。最终也再网上得到了解释。我们首先在HTML文件中建立DIV嵌套模型。之后css代码如下：<br>  <pre><code>.div{<br>    background-color: red;<br>    width: 500px;<br>    height: 500px;<br>    margin: 0 auto;<br>}<br>.div2{<br>    background-color: green;<br>    width: 300px;<br>    height: 300px;<br>    margin: 10px auto;<br>}</code></pre>我们会发现虽然进行了设置，但是结果却这样的：<br><img src="2.png" alt=""><br>二者之间的顶部是重合的。这是什么原因呢？<br><strong>当两个容器嵌套时,如果外层容器和内层容器之间没有别的元素,firefox会把内层元素的margin-top作用与父元素。</strong><br>也就是说因为子层是父层的一个非空子元素，所以使用margin-top时就会发生这个错误。<br>解决的方法有三个：<br>1.使用浮动来解决，将子层代码添加float:left属性。（但是脱离文档流的DIV会产生移动）<br>2.使用padding-top来解决即给父级添加padding-to：()px。这种方法使子级DIV距离父级顶部距离加了一个()px。<br>3.给父级添加overflow:hidden属性。(这种方法没有什么副作用）</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>学习CSS还是需要注意很多细节的，具体还要通过动手来完善自己的知识，知识知其然是不够的，知其所以然，融汇贯通才能进步。</p>
+<p>　　</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/09/new-article-1/" itemprop="url">
                   学习CSS过程中遇到的问题
                 </a>
@@ -452,7 +561,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

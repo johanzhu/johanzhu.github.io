@@ -84,25 +84,19 @@
 
 
 
-<meta name="description" content="垂直居中/定位DIV的垂直居中，能够通过设置外边距的方式来实现。在父级DIV内部的子集DIV可以通过命令：
-margin: (calculated value)px  auto;来实现。当然也可以通过绝对定位来实现,而代码稍有区别,需要设置父级与子级DIV的定位：
-.父级DIV {  position: relative;}  
-.子集DIV {  width: 50%;  height: 50%">
+<meta name="description" content="高度自适应　　自适应我们分为两部分来说。首先是文字内容自适应DIV高度。  在这种情况下，一般有两种途径能够解决。  1：第一种方法是设置最低的高度  _height: 200px;/仅IE6需要设别此属性，假定最低高度是200PX，设置内容超出后会自动撑开行高/ min-height:200px;/css最小高度为200px，支持除IE6以外浏览器/ 2：第二种方法是同时设定两个DIV，最小高度">
 <meta property="og:type" content="article">
-<meta property="og:title" content="学习CSS过程中遇到的问题">
-<meta property="og:url" content="http://yoursite.com/2016/07/09/new-article-1/index.html">
+<meta property="og:title" content="遗留问题的解答（自适应/浮动清除/边距)">
+<meta property="og:url" content="http://yoursite.com/2016/07/10/my-new-post/index.html">
 <meta property="og:site_name" content="JohanZhu's Blog">
-<meta property="og:description" content="垂直居中/定位DIV的垂直居中，能够通过设置外边距的方式来实现。在父级DIV内部的子集DIV可以通过命令：
-margin: (calculated value)px  auto;来实现。当然也可以通过绝对定位来实现,而代码稍有区别,需要设置父级与子级DIV的定位：
-.父级DIV {  position: relative;}  
-.子集DIV {  width: 50%;  height: 50%">
-<meta property="og:updated_time" content="2016-07-09T04:10:27.776Z">
+<meta property="og:description" content="高度自适应　　自适应我们分为两部分来说。首先是文字内容自适应DIV高度。  在这种情况下，一般有两种途径能够解决。  1：第一种方法是设置最低的高度  _height: 200px;/仅IE6需要设别此属性，假定最低高度是200PX，设置内容超出后会自动撑开行高/ min-height:200px;/css最小高度为200px，支持除IE6以外浏览器/ 2：第二种方法是同时设定两个DIV，最小高度">
+<meta property="og:image" content="http://yoursite.com/1.png">
+<meta property="og:image" content="http://yoursite.com/2.png">
+<meta property="og:updated_time" content="2016-07-11T03:24:51.390Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="学习CSS过程中遇到的问题">
-<meta name="twitter:description" content="垂直居中/定位DIV的垂直居中，能够通过设置外边距的方式来实现。在父级DIV内部的子集DIV可以通过命令：
-margin: (calculated value)px  auto;来实现。当然也可以通过绝对定位来实现,而代码稍有区别,需要设置父级与子级DIV的定位：
-.父级DIV {  position: relative;}  
-.子集DIV {  width: 50%;  height: 50%">
+<meta name="twitter:title" content="遗留问题的解答（自适应/浮动清除/边距)">
+<meta name="twitter:description" content="高度自适应　　自适应我们分为两部分来说。首先是文字内容自适应DIV高度。  在这种情况下，一般有两种途径能够解决。  1：第一种方法是设置最低的高度  _height: 200px;/仅IE6需要设别此属性，假定最低高度是200PX，设置内容超出后会自动撑开行高/ min-height:200px;/css最小高度为200px，支持除IE6以外浏览器/ 2：第二种方法是同时设定两个DIV，最小高度">
+<meta name="twitter:image" content="http://yoursite.com/1.png">
 
 
 
@@ -123,9 +117,9 @@ margin: (calculated value)px  auto;来实现。当然也可以通过绝对定位
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/07/09/new-article-1/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/07/10/my-new-post/"/>
 
-  <title> 学习CSS过程中遇到的问题 | JohanZhu's Blog </title>
+  <title> 遗留问题的解答（自适应/浮动清除/边距) | JohanZhu's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -245,7 +239,7 @@ margin: (calculated value)px  auto;来实现。当然也可以通过绝对定位
             
             
               
-                学习CSS过程中遇到的问题
+                遗留问题的解答（自适应/浮动清除/边距)
               
             
           </h1>
@@ -257,8 +251,8 @@ margin: (calculated value)px  auto;来实现。当然也可以通过绝对定位
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-09T09:54:38+08:00" content="2016-07-09">
-              2016-07-09
+            <time itemprop="dateCreated" datetime="2016-07-10T21:31:35+08:00" content="2016-07-10">
+              2016-07-10
             </time>
           </span>
 
@@ -285,11 +279,22 @@ margin: (calculated value)px  auto;来实现。当然也可以通过绝对定位
       
 
       
-        <h3 id="垂直居中-定位"><a href="#垂直居中-定位" class="headerlink" title="垂直居中/定位"></a>垂直居中/定位</h3><p>DIV的垂直居中，能够通过设置外边距的方式来实现。在父级DIV内部的子集DIV可以通过命令：</p>
-<p><pre><code>margin: (calculated value)px  auto;</code></pre>来实现。<br>当然也可以通过绝对定位来实现,而代码稍有区别,需要设置父级与子级DIV的定位：</p>
-<p><pre><code><br>.父级DIV {<br>  position: relative;<br>}  </code></pre></p>
-<p>.子集DIV {<br>  width: 50%;<br>  height: 50%;<br>  overflow: auto;<br>  margin: auto;<br>  position: absolute;<br>  top: 0; left: 0; bottom: 0; right: 0;<br>  } <br>  那么我们怎么理解第二种DIV的垂直居中方式呢？<br>  首先从两个定位开始说：<br>  position: relative和position: absolute，即相对定位和绝对定位。<br>  相对定位是没有脱离正常的文档流的，此时，对象原来占有的位置被保留。（移动后会覆盖其他内容）。<br>  绝对定位脱离了正常的文档流，它相当于飞了起来，不在占位置了。<br>  在定义子集绝对定位后，通过 top: 0; left: 0; bottom: 0; right: 0; 使子DIV占满父DIV，之后设置子DIV的高度和宽度为一半。之后定义外边距为auto。由于脱离了正常的文档流，这里我们会给上下和左右编剧相同的值，最终实现居中的效果。<br>  　　文字的垂直居中我们有两种方法。<br>    一种是将行高line-height设置的与DIV的高度一样；<br>    另外一种是将父级的DIV用display来定义框的类型（display如果使用不谨慎，容易违反HTML中已定义的层次结构）：<br>    我们可以将父级的DIV定义为table表格，将子DIV定义为表格单个元素，之后用vertical-align: middle;来实现文字的垂直居中。<br>    但是值得一提的是，我在用这种方法实现垂直居中时发现，如果设置了子级DIV为单元格的话，那么子集的DIV会把父级直接填满（先设置了两个DIV的背景颜色）。所以情况不允许，还是第一种方法比较好。</p>
-<h3 id="遗留的问题"><a href="#遗留的问题" class="headerlink" title="遗留的问题"></a>遗留的问题</h3><p>   下一篇会写到一些遗留的问题，有关自适应，父级塌陷以及DIV嵌套的小BUG。</p>
+        <h3 id="高度自适应"><a href="#高度自适应" class="headerlink" title="高度自适应"></a>高度自适应</h3><p>　　自适应我们分为两部分来说。首先是文字内容自适应DIV高度。<br>  在这种情况下，一般有两种途径能够解决。<br>  1：第一种方法是设置最低的高度<br>  <pre><code>_height: 200px;/<em>仅IE6需要设别此属性，假定最低高度是200PX，设置内容超出后会自动撑开行高</em>/<br> min-height:200px;/<em>css最小高度为200px，支持除IE6以外浏览器</em>/</code></pre><br> 2：第二种方法是同时设定两个DIV，最小高度均为200px，当内容较少时DIV盒子的高度是200px，当内容超出时，DIV可以自适应高度，两个DIV进行同样的设置：<br> <pre><code>div{_height:200px; min-height:200px; border:1px solid #000; width:100px}<br>/<em> css注释：设置最小高度，border边框，宽度 </em>/ </code></pre></p>
+<p>　　接下来是图片大小的自适应。<br>  css2中用到的方法是运用判断表达式来进行图片大小的自适应。而在css3中能够用background-size来解决。<br>  background-size语法解析如下：</p>
+<ol>
+<li>length,percentage。根据跟定长度值或者百分比来调整背景图片大小。auto为默认值。<br>冒号后的第一个值是宽度，第二个值是高度。（均不能为负值）<br>假如只给一个值，则第二个值自动为”auto”；<br>假如指定为百分比值，那么背景图的大小是根据相对的背景区域来作调整。而背景区域是根据background-origin属性来决定的。<br>（padding-box    背景图像相对于内边距框来定位<br>border-box       背景图像相对于边框盒来定位<br>cotent-box       背景图像相对于内容框来定位）<ol>
+<li>contain。 <pre><code>div { background-size: contain; }</code></pre>它的效果按比例将图片缩放到最大尺寸以使其高宽都在背景区域里面，其主要用在背景图片比容器大的情况下。（使用该值时，图片可能发生扭曲）</li>
+<li>cover。 <pre><code>div { background-size: cover; }</code></pre>它的效用是按比例将图片缩放到最小尺寸以使其完整覆盖背景区域，其主要用在背景图片比容器小的情况下。（使用该值也可能是图片扭曲。<br>　　通过以上3种设置方法，能够实现图片的自适应。</li>
+</ol>
+</li>
+</ol>
+<h3 id="浮动清除"><a href="#浮动清除" class="headerlink" title="浮动清除"></a>浮动清除</h3><p>　　当我们进行DIV嵌套后，又对子级的DIV设置了浮动后。父级DIV就会因为子级DIV脱离普通文档流而坍塌。那么我们如何解决这个问题呢？有如下两种方法：<br>  1.第一种方法是使用 overflow:hidden.<br> 它有两个作用。第一个作用是：当属性规定的内容溢出元素框时，将内容修剪，并且其余内容是不可见的。（注意，若内容有绝对定位，则该属性不能对其进行修剪）<br> 第二个作用就是浮动清除了。给父级添加了overflow:hidden后，子级的浮动会被清除，从而自适应内容的高度。</p>
+<ol>
+<li>第二种方法是使用clear：both属性。<br>那么这里我们用网上一个经典的例子来说明吧:<br><img src="1.png" alt=""><br>但是这种方法也有缺点，即添加了没有意义的DIV标签。<br>（其实通过计算去设定父级DIV的高度也可以实现效果，但是这样就无法自适应了。）</li>
+</ol>
+<h3 id="边距的问题"><a href="#边距的问题" class="headerlink" title="边距的问题"></a>边距的问题</h3><p>　　那么最后这个问题就开门见山的解释了。这是我在学习盒模型，自己实验时发现的问题。最终也再网上得到了解释。我们首先在HTML文件中建立DIV嵌套模型。之后css代码如下：<br>  <pre><code>.div{<br>    background-color: red;<br>    width: 500px;<br>    height: 500px;<br>    margin: 0 auto;<br>}<br>.div2{<br>    background-color: green;<br>    width: 300px;<br>    height: 300px;<br>    margin: 10px auto;<br>}</code></pre>我们会发现虽然进行了设置，但是结果却这样的：<br><img src="2.png" alt=""><br>二者之间的顶部是重合的。这是什么原因呢？<br><strong>当两个容器嵌套时,如果外层容器和内层容器之间没有别的元素,firefox会把内层元素的margin-top作用与父元素。</strong><br>也就是说因为子层是父层的一个非空子元素，所以使用margin-top时就会发生这个错误。<br>解决的方法有三个：<br>1.使用浮动来解决，将子层代码添加float:left属性。（但是脱离文档流的DIV会产生移动）<br>2.使用padding-top来解决即给父级添加padding-to：()px。这种方法使子级DIV距离父级顶部距离加了一个()px。<br>3.给父级添加overflow:hidden属性。(这种方法没有什么副作用）</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>学习CSS还是需要注意很多细节的，具体还要通过动手来完善自己的知识，知识知其然是不够的，知其所以然，融汇贯通才能进步。</p>
+<p>　　</p>
 
       
     </div>
@@ -320,17 +325,13 @@ margin: (calculated value)px  auto;来实现。当然也可以通过绝对定位
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/06/new-article/" rel="next" title="My first article">
-                <i class="fa fa-chevron-left"></i> My first article
+              <a href="/2016/07/09/new-article-1/" rel="next" title="学习CSS过程中遇到的问题">
+                <i class="fa fa-chevron-left"></i> 学习CSS过程中遇到的问题
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/10/my-new-post/" rel="prev" title="遗留问题的解答（自适应/浮动清除/边距)">
-                遗留问题的解答（自适应/浮动清除/边距) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -437,7 +438,7 @@ margin: (calculated value)px  auto;来实现。当然也可以通过绝对定位
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直居中-定位"><span class="nav-number">1.</span> <span class="nav-text">垂直居中/定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遗留的问题"><span class="nav-number">2.</span> <span class="nav-text">遗留的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#高度自适应"><span class="nav-number">1.</span> <span class="nav-text">高度自适应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮动清除"><span class="nav-number">2.</span> <span class="nav-text">浮动清除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边距的问题"><span class="nav-number">3.</span> <span class="nav-text">边距的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
           </div>
         </section>
