@@ -374,6 +374,133 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/20/five-post/" itemprop="url">
+                  学习总结之图片的循环加载
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-20T11:36:59+08:00" content="2016-07-20">
+              2016-07-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h3><p>&#x3000;&#x3000;&#x4E4B;&#x524D;&#x5BF9;&#x5982;&#x4F55;&#x7528;javascript&#x5B9E;&#x73B0;&#x56FE;&#x7247;&#x7011;&#x5E03;&#x6D41;&#x7684;&#x6548;&#x679C;&#x8FDB;&#x884C;&#x4E86;&#x603B;&#x7ED3;&#x3002;&#x90A3;&#x4E48;&#x8FD9;&#x4E00;&#x7BC7;&#x6211;&#x4EEC;&#x6765;&#x8BB2;&#x89E3;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x56FE;&#x7247;&#x7684;&#x5FAA;&#x73AF;&#x52A0;&#x8F7D;&#x3002;&#x5373;&#x6EDA;&#x52A8;&#x6761;&#x62D6;&#x52A8;&#x5230;&#x5E95;&#x90E8;&#x65F6;&#xFF0C;&#x80FD;&#x591F;&#x65E0;&#x9650;&#x7684;&#x52A0;&#x8F7D;&#x60F3;&#x8981;&#x7684;&#x56FE;&#x7247;&#x3002;</p>
+<h3 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h3><p>&#x3000;&#x3000;&#x5728;&#x5199;CODE&#x4E4B;&#x524D;&#x8FD8;&#x662F;&#x5148;&#x8FDB;&#x884C;&#x4E00;&#x4E0B;&#x6784;&#x60F3;&#x3002;&#x4E3A;&#x4E86;&#x5B9E;&#x73B0;&#x8FD9;&#x79CD;&#x5FAA;&#x73AF;&#x7684;&#x52A0;&#x8F7D;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5B8C;&#x6210;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#x4E8B;&#x60C5;&#x3002;<br>&#x3000;&#x3000;&#x9996;&#x5148;&#x5F53;&#x6EDA;&#x52A8;&#x6761;&#x6EDA;&#x52A8;&#x5230;&#x8D34;&#x5E95;&#x7684;&#x4E00;&#x5F20;&#x56FE;&#x7247;&#x51FA;&#x73B0;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x8F7D;&#x5165;&#x65B0;&#x7684;&#x56FE;&#x7247;&#x3002;&#x540C;&#x65F6;&#x5C06;&#x65B0;&#x7684;&#x56FE;&#x7247;&#x4E5F;&#x6309;&#x7167;&#x7011;&#x5E03;&#x6D41;&#x7684;&#x5F62;&#x5F0F;&#x8FDB;&#x884C;&#x6446;&#x653E;&#x3002;OK&#xFF0C;&#x90A3;&#x4E48;&#x4E3A;&#x4E86;&#x5B8C;&#x6210;&#x8FD9;&#x4E9B;&#x4E8B;&#x4EF6;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x83B7;&#x5F97;&#x6700;&#x5E95;&#x90E8;&#x7684;&#x56FE;&#x7247;&#x8DDD;&#x79BB;&#x9876;&#x90E8;&#x7684;&#x9AD8;&#x5EA6;&#x3002;&#x800C;&#x83B7;&#x5F97;&#x4E86;&#x8FD9;&#x4E2A;&#x9AD8;&#x5EA6;&#x540E;&#x53C8;&#x8BE5;&#x5982;&#x4F55;&#x68C0;&#x6D4B;&#x5230;&#x6EDA;&#x52A8;&#x5230;&#x4E86;&#x6B64;&#x5904;&#x5462;&#xFF1F;&#x63A5;&#x4E0B;&#x6765;&#x770B;&#x4E00;&#x770B;code&#x5427;~</p>
+<h4 id="&#x68C0;&#x6D4B;&#x6EDA;&#x52A8;"><a href="#&#x68C0;&#x6D4B;&#x6EDA;&#x52A8;" class="headerlink" title="&#x68C0;&#x6D4B;&#x6EDA;&#x52A8;"></a>&#x68C0;&#x6D4B;&#x6EDA;&#x52A8;</h4><pre><code>function checkFlag(){
+var cparent=document.getElementById(&quot;container&quot;);
+var ccontent=getChildElement(cparent,&quot;box&quot;);//&#x8FD0;&#x7528;&#x6211;&#x4EEC;&#x4E0A;&#x4E00;&#x5F20;&#x8BB2;&#x5230;&#x7684;&#x51FD;&#x6570;&#x83B7;&#x5F97;&#x7C7B;&#x540D;&#x4E3A;box&#x7684;DIV
+var lastContentHeight=ccontent[ccontent.length-1].offsetTop;//&#x5F97;&#x5230;&#x6700;&#x5E95;&#x90E8;&#x7684;&#x56FE;&#x7247;&#x7684;&#x8DDD;&#x9876;&#x9AD8;&#x5EA6;
+var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;//&#x83B7;&#x5F97;&#x9690;&#x85CF;&#x90E8;&#x5206;&#x7684;&#x6EDA;&#x52A8;&#x9876;&#x9AD8;&#xFF0C;&#x8FD9;&#x4E2A;&#x8DDD;&#x79BB;&#x6211;&#x4EEC;&#x7B49;&#x4F1A;&#x8BE6;&#x7EC6;&#x8BB2;&#x4E00;&#x4E0B;
+var pageHeight=document.documentElement.clientHeight||document.body.clientHeight;//&#x5F97;&#x5230;&#x53EF;&#x89C6;&#x533A;&#x57DF;&#x7684;&#x9AD8;&#x5EA6;
+if(lastContentHeight&lt;scrollTop+pageHeight){//&#x5F53;&#x6700;&#x5E95;&#x90E8;&#x56FE;&#x7247;&#x7684;&#x8DDD;&#x9876;&#x9AD8;&#x5EA6;&#x5C0F;&#x4E8E;&#x6EDA;&#x52A8;&#x9876;&#x9AD8;&#x52A0;&#x53EF;&#x89C6;&#x533A;&#x9AD8;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x8FD4;&#x56DE;true&#x7684;&#x5E03;&#x5C14;&#x7C7B;&#x578B;
+return true;
+}
+}
+</code></pre><p>&#x3000;&#x3000;&#x8FD9;&#x91CC;&#x8BB2;&#x89E3;&#x4E00;&#x4E0B;scollTop&#x548C;if&#x540E;&#x9762;&#x7684;&#x62EC;&#x53F7;&#x91CC;&#x5224;&#x65AD;&#x7684;&#x542B;&#x4E49;&#xFF1A;<br>&#x9996;&#x5148;&#x89E3;&#x91CA;scrollTop:<br>&#x7F51;&#x4E0A;&#x7684;&#x89E3;&#x91CA;&#x662F;&#xFF0C;&#x201C;&#x8BBE;&#x7F6E;&#x6216;&#x83B7;&#x53D6;&#x4F4D;&#x4E8E;&#x5BF9;&#x8C61;&#x6700;&#x9876;&#x7AEF;&#x548C;&#x7A97;&#x53E3;&#x4E2D;&#x53EF;&#x89C1;&#x5185;&#x5BB9;&#x7684;&#x6700;&#x9876;&#x7AEF;&#x4E4B;&#x95F4;&#x7684;&#x8DDD;&#x79BB;&#x201D;&#x3002;&#x8FD9;&#x53EF;&#x80FD;&#x4E4D;&#x770B;&#x4E4B;&#x4E0B;&#x6709;&#x70B9;&#x96BE;&#x4EE5;&#x7406;&#x89E3;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x901A;&#x4FD7;&#x7684;&#x89E3;&#x91CA;&#x4E00;&#x4E0B;&#x3002;<br>&#x9996;&#x9009;&#x5982;&#x679C;&#x9875;&#x9762;&#x5F97;&#x9AD8;&#x5EA6;&#x8D85;&#x8FC7;&#x4E86;&#x7F51;&#x9875;&#x7684;&#x53EF;&#x89C6;&#x533A;&#x57DF;&#x5373;clientHeight&#x7684;&#x8BDD;&#xFF0C;&#x591A;&#x4F59;&#x7684;&#x90E8;&#x5206;&#x4F1A;&#x88AB;&#x9690;&#x85CF;&#x3002;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x6EDA;&#x52A8;&#x6761;&#x6765;&#x770B;&#x5230;&#x88AB;&#x9690;&#x85CF;&#x7684;&#x90E8;&#x5206;&#x3002;&#x5F53;&#x5411;&#x4E0B;&#x62D6;&#x52A8;&#x6EDA;&#x52A8;&#x6761;&#x65F6;&#xFF0C;&#x88AB;&#x9690;&#x85CF;&#x7684;&#x90E8;&#x5206;&#x4E00;&#x70B9;&#x4E00;&#x70B9;&#x7684;&#x88AB;&#x5C55;&#x73B0;&#x51FA;&#x6765;&#xFF0C;&#x800C;&#x5C55;&#x73B0;&#x51FA;&#x6765;&#x7684;&#x9690;&#x85CF;&#x90E8;&#x5206;&#x7684;&#x9AD8;&#x5EA6;&#x5C31;&#x662F;&#x6211;&#x4EEC;scrollTop&#x3002;&#x8FD9;&#x4E2A;&#x503C;&#x662F;&#x968F;&#x7740;&#x6EDA;&#x52A8;&#x6761;&#x7684;&#x62D6;&#x52A8;&#x800C;&#x53D8;&#x52A8;&#x7684;&#x3002;<br>&#x62EC;&#x53F7;&#x91CC;&#x5224;&#x65AD;&#x7684;&#x610F;&#x601D;&#x662F;&#xFF1A;<br>&#x82E5;&#x5224;&#x65AD;&#x7B26;&#x53F7;&#x53D6;&#x7B49;&#x53F7;&#x7684;&#x8BDD;&#xFF0C;&#x5373;&#x662F;&#x5F53;&#x62D6;&#x52A8;&#x6EDA;&#x52A8;&#x6761;&#x6E10;&#x6E10;&#x5411;&#x4E0B;&#x521A;&#x597D;&#x5230;&#x4E86;&#x6700;&#x5E95;&#x90E8;&#x56FE;&#x7247;&#x7684;&#x9876;&#x90E8;&#xFF0C;&#x6B64;&#x65F6;&#x6211;&#x4EEC;&#x53EF;&#x89C6;&#x533A;&#x57DF;&#x7684;&#x9AD8;&#x5EA6;&#x52A0;&#x4E0A;scrollTop&#x521A;&#x597D;&#x7B49;&#x4E8E;&#x6700;&#x5E95;&#x90E8;&#x56FE;&#x7247;&#x7684;&#x8DDD;&#x9876;&#x9AD8;&#x5EA6;&#x3002;&#x7EE7;&#x7EED;&#x62D6;&#x52A8;&#x65F6;&#xFF0C;&#x53EF;&#x89C6;&#x533A;&#x9AD8;&#x5EA6;&#x52A0;scrollTop&#x5C31;&#x4F1A;&#x5927;&#x4E8E;&#x8FD9;&#x4E2A;&#x503C;&#xFF0C;&#x5373;&#x6EDA;&#x52A8;&#x5230;&#x4E86;&#x53EF;&#x4EE5;&#x770B;&#x89C1;&#x6700;&#x540E;&#x4E00;&#x5F20;&#x56FE;&#x7684;&#x5730;&#x6B65;&#x4E86;~&#x6240;&#x4EE5;&#x5F53;&#x8FD9;&#x4E2A;&#x8DDD;&#x9876;&#x9AD8;&#x5EA6;&#x5C0F;&#x4E8E;&#x53EF;&#x89C6;&#x533A;&#x9AD8;&#x52A0;csrollTop&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x8FD4;&#x56DE;true&#xFF0C;&#x8868;&#x793A;&#xFF1A;&#x554A;&#xFF01;&#x5DF2;&#x7ECF;&#x5230;&#x4E86;&#x8981;&#x52A0;&#x8F7D;&#x56FE;&#x7247;&#x7684;&#x65F6;&#x5019;&#x4E86;&#xFF01;<br></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/20/five-post/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/10/my-new-post/" itemprop="url">
                   遗留问题的解答（自适应/浮动清除/边距)
                 </a>
@@ -751,7 +878,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -759,7 +886,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

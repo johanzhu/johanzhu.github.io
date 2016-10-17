@@ -1,0 +1,664 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x524D;&amp;#x8A00;(&amp;#x4E4B;&amp;#x524D;&amp;#x7684;&amp;#x4E00;&amp;#x7BC7;&amp;#x6F0F;&amp;#x6389;&amp;#x4E86;&amp;#x8FD9;&amp;#x91CC;&amp;#x8865;&amp;#x6863;&amp;#x4E00;&amp;#x4E0B;~)&amp;#x8BDD;&amp;#x4E0D;&amp;#x591A;&amp;#x8BF4;&amp;#x3002;&amp;#x8FD9;&amp;#x6B21;&amp;#x6211;&amp;#x4E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于执行环境、作用域、作用域链<strike>与闭包</strike>">
+<meta property="og:url" content="http://yoursite.com/2016/08/20/15/index.html">
+<meta property="og:site_name" content="JohanZhu's Blog">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;(&amp;#x4E4B;&amp;#x524D;&amp;#x7684;&amp;#x4E00;&amp;#x7BC7;&amp;#x6F0F;&amp;#x6389;&amp;#x4E86;&amp;#x8FD9;&amp;#x91CC;&amp;#x8865;&amp;#x6863;&amp;#x4E00;&amp;#x4E0B;~)&amp;#x8BDD;&amp;#x4E0D;&amp;#x591A;&amp;#x8BF4;&amp;#x3002;&amp;#x8FD9;&amp;#x6B21;&amp;#x6211;&amp;#x4E">
+<meta property="og:updated_time" content="2016-10-17T01:20:53.498Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于执行环境、作用域、作用域链<strike>与闭包</strike>">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;(&amp;#x4E4B;&amp;#x524D;&amp;#x7684;&amp;#x4E00;&amp;#x7BC7;&amp;#x6F0F;&amp;#x6389;&amp;#x4E86;&amp;#x8FD9;&amp;#x91CC;&amp;#x8865;&amp;#x6863;&amp;#x4E00;&amp;#x4E0B;~)&amp;#x8BDD;&amp;#x4E0D;&amp;#x591A;&amp;#x8BF4;&amp;#x3002;&amp;#x8FD9;&amp;#x6B21;&amp;#x6211;&amp;#x4E">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/20/15/"/>
+
+  <title> 关于执行环境、作用域、作用域链<strike>与闭包</strike> | JohanZhu's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JohanZhu's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于执行环境、作用域、作用域链<strike>与闭包</strike>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-20T21:40:52+08:00" content="2016-08-20">
+              2016-08-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h3><p>(&#x4E4B;&#x524D;&#x7684;&#x4E00;&#x7BC7;&#x6F0F;&#x6389;&#x4E86;&#x8FD9;&#x91CC;&#x8865;&#x6863;&#x4E00;&#x4E0B;~)<br>&#x8BDD;&#x4E0D;&#x591A;&#x8BF4;&#x3002;&#x8FD9;&#x6B21;&#x6211;&#x4EEC;&#x8C08;&#x8C08;JS&#x4E2D;&#x7684;&#x5173;&#x4E8E;&#x4F5C;&#x7528;&#x57DF;,&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#xFF0C;&#x8FD8;&#x6709;&#x6267;&#x884C;&#x73AF;&#x5883;&#x4EE5;.<br><a id="more"></a></p>
+<h4 id="&#x6267;&#x884C;&#x73AF;&#x5883;&#x4E0E;&#x6267;&#x884C;&#x4E0A;&#x4E0B;&#x6587;"><a href="#&#x6267;&#x884C;&#x73AF;&#x5883;&#x4E0E;&#x6267;&#x884C;&#x4E0A;&#x4E0B;&#x6587;" class="headerlink" title="&#x6267;&#x884C;&#x73AF;&#x5883;&#x4E0E;&#x6267;&#x884C;&#x4E0A;&#x4E0B;&#x6587;"></a><b>&#x6267;&#x884C;&#x73AF;&#x5883;&#x4E0E;&#x6267;&#x884C;&#x4E0A;&#x4E0B;&#x6587;</b></h4><p>&#x9996;&#x5148;&#x6267;&#x884C;&#x73AF;&#x5883;(excution context)&#x4E5F;&#x5C31;&#x662F;&#x6267;&#x884C;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;context&#x6709;&#x4EBA;&#x628A;&#x5B83;&#x7FFB;&#x8BD1;&#x6210;&#x4E0A;&#x4E0B;&#x6587;&#x3002;&#x6211;&#x5F00;&#x59CB;&#x4E00;&#x76F4;&#x4EE5;&#x4E3A;&#x8FD9;&#x4E24;&#x4E2A;&#x4E1C;&#x897F;&#x4E0D;&#x4E00;&#x6837;&#x5462;&#x3002;&#x3002;&#x6240;&#x4EE5;&#x540E;&#x9762;&#x51FA;&#x73B0;&#x7684;&#x6267;&#x884C;&#x4E0A;&#x4E0B;&#x6587;&#x548C;&#x6267;&#x884C;&#x73AF;&#x5883;&#x5C31;&#x662F;&#x4E00;&#x56DE;&#x4E8B;&#x54AF;&#x3002;</p>
+<h4 id="&#x6267;&#x884C;&#x73AF;&#x5883;&#x662F;&#x4EC0;&#x4E48;"><a href="#&#x6267;&#x884C;&#x73AF;&#x5883;&#x662F;&#x4EC0;&#x4E48;" class="headerlink" title="&#x6267;&#x884C;&#x73AF;&#x5883;&#x662F;&#x4EC0;&#x4E48;"></a><b>&#x6267;&#x884C;&#x73AF;&#x5883;&#x662F;&#x4EC0;&#x4E48;</b></h4><p>&#x5728;javascript&#x4E2D;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x51FD;&#x6570;&#x90FD;&#x62E5;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x6267;&#x884C;&#x73AF;&#x5883;&#x3002;&#x6267;&#x884C;&#x73AF;&#x5883;&#x5B9A;&#x4E49;&#x4E86;&#x53D8;&#x91CF;&#x6216;&#x8005;&#x51FD;&#x6570;&#x6709;&#x6743;&#x8BBF;&#x95EE;&#x7684;&#x5176;&#x4ED6;&#x6570;&#x636E;&#xFF0C;&#x51B3;&#x5B9A;&#x4E86;&#x5B83;&#x4EEC;&#x5404;&#x81EA;&#x7684;&#x884C;&#x4E3A;&#x3002;&#x6BCF;&#x4E2A;&#x6267;&#x884C;&#x73AF;&#x5883;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x7684;<b>&#x53D8;&#x91CF;&#x5BF9;&#x8C61;</b>&#xFF08;PS&#xFF1A;&#x8FD9;&#x4E2A;&#x6982;&#x5FF5;&#x5728;&#x540E;&#x9762;&#x4F1A;&#x7528;&#x5230;&#xFF09;&#x73AF;&#x5883;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#x4E0E;&#x51FD;&#x6570;&#x90FD;&#x4FDD;&#x5B58;&#x5728;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x4E2D;&#x3002;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x6211;&#x4EEC;&#x662F;&#x8BBF;&#x95EE;&#x4E0D;&#x5230;&#x7684;&#xFF0C;&#x53EA;&#x6709;&#x89E3;&#x6790;&#x5668;&#x5904;&#x7406;&#x6570;&#x636E;&#x65F6;&#x4F1A;&#x7528;&#x5230;&#x3002;&#xFF08;&#x6700;&#x8FD1;&#x5199;ES6&#x7684;&#x65F6;&#x5019;,&#x5728;for&#x5FAA;&#x73AF;&#x91CC;&#x9762;&#x7528;&#x5230;&#x4E86;let&#x3002;let&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x5757;&#x7EA7;&#x4F5C;&#x7528;&#x57DF;&#x3002;&#x800C;ES5&#x4E2D;&#x53EA;&#x6709;&#x51FD;&#x6570;&#x624D;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x5757;&#x7EA7;&#x4F5C;&#x7528;&#x57DF;&#xFF09;</p>
+<h4 id="&#x6267;&#x884C;&#x73AF;&#x5883;&#x7684;&#x4EA7;&#x751F;"><a href="#&#x6267;&#x884C;&#x73AF;&#x5883;&#x7684;&#x4EA7;&#x751F;" class="headerlink" title="&#x6267;&#x884C;&#x73AF;&#x5883;&#x7684;&#x4EA7;&#x751F;"></a><b>&#x6267;&#x884C;&#x73AF;&#x5883;&#x7684;&#x4EA7;&#x751F;</b></h4><p>&#x6267;&#x884C;&#x73AF;&#x5883;&#x7684;&#x751F;&#x6210;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x8BF4;&#x6709;&#x5C31;&#x6709;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x5B83;&#x5206;&#x4E3A;&#x51E0;&#x4E2A;&#x6B65;&#x9AA4;&#xFF1A;</p>
+<h4 id="&#x51FD;&#x6570;&#x58F0;&#x660E;&#x9636;&#x6BB5;&#xFF1A;"><a href="#&#x51FD;&#x6570;&#x58F0;&#x660E;&#x9636;&#x6BB5;&#xFF1A;" class="headerlink" title="&#x51FD;&#x6570;&#x58F0;&#x660E;&#x9636;&#x6BB5;&#xFF1A;"></a><b>&#x51FD;&#x6570;&#x58F0;&#x660E;&#x9636;&#x6BB5;&#xFF1A;</b></h4><p>&#x5728;&#x58F0;&#x660E;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF08;&#x5BF9;&#x8C61;&#xFF09;&#xFF0C;&#x4F1A;&#x4E3A;&#x5B83;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;scope&#x5C5E;&#x6027;&#xFF0C;&#x5B83;&#x6307;&#x5411;&#x7684;&#x662F;&#x5F53;&#x524D;&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#x7684;&#x5BF9;&#x8C61;&#x3002;</p>
+<h4 id="&#x51FD;&#x6570;&#x8C03;&#x7528;&#x9636;&#x6BB5;&#xFF1A;"><a href="#&#x51FD;&#x6570;&#x8C03;&#x7528;&#x9636;&#x6BB5;&#xFF1A;" class="headerlink" title="&#x51FD;&#x6570;&#x8C03;&#x7528;&#x9636;&#x6BB5;&#xFF1A;"></a><b>&#x51FD;&#x6570;&#x8C03;&#x7528;&#x9636;&#x6BB5;&#xFF1A;</b></h4><p>&#x751F;&#x6210;&#x6211;&#x4EEC;&#x7684;&#x6267;&#x884C;&#x73AF;&#x5883;&#x3002;&#xFF08;JS&#x89E3;&#x6790;&#x5668;&#x9996;&#x5148;&#x8FDB;&#x5165;&#x7684;&#x662F;&#x5168;&#x5C40;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x5F53;&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x521B;&#x9020;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x5E76;&#x628A;&#x5B83;&#x63A8;&#x5165;&#x5230;&#x4E0A;&#x4E0B;&#x6587;&#x5806;&#x6808;&#x7684;&#x9876;&#x90E8;&#x3002;&#x9996;&#x5148;&#x6267;&#x884C;&#x7684;&#x662F;&#x9876;&#x90E8;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x6267;&#x884C;&#x5B8C;&#x6BD5;&#x540E;&#x4F1A;&#x5C06;&#x5176;&#x5F39;&#x51FA;&#xFF0C;&#x518D;&#x6267;&#x884C;&#x4E0B;&#x9762;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x6700;&#x7EC8;&#x56DE;&#x5230;&#x5168;&#x5C40;&#x4E0A;&#x4E0B;&#x6587;&#x3002;&#xFF09;<br>&#x800C;&#x8C03;&#x7528;&#x9636;&#x6BB5;&#x4E5F;&#x5206;&#x4E3A;&#x4E24;&#x4E2A;&#x8FC7;&#x7A0B;&#xFF1A;<br>1&#xFF1A;&#x8C03;&#x7528;&#x51FD;&#x6570;&#xFF0C;&#x51FD;&#x6570;&#x6267;&#x884C;&#x524D;<br>&#x6B64;&#x65F6;&#x4F1A;&#x5EFA;&#x7ACB;&#x53D8;&#x91CF;&#xFF0C;&#x51FD;&#x6570;&#xFF0C;arguments&#x5BF9;&#x8C61;&#xFF0C;&#x53C2;&#x6570;&#xFF1B;&#x5EFA;&#x7ACB;&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#xFF0C;&#x786E;&#x5B9A;this&#x7684;&#x6307;&#x5411;&#x3002;<br>2&#xFF1A;&#x51FD;&#x6570;&#x6267;&#x884C;<br>&#x6B64;&#x65F6;&#x4F1A;&#x7ED9;&#x53D8;&#x91CF;&#x8D4B;&#x503C;&#xFF0C;&#x7ED9;&#x51FD;&#x6570;&#x5F15;&#x7528;&#xFF0C;&#x5E76;&#x6267;&#x884C;&#x5176;&#x4ED6;&#x4EE3;&#x7801;&#x3002;<br>&#x7B2C;&#x4E00;&#x9636;&#x6BB5;&#x8BE6;&#x7EC6;&#x7684;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;<br>1&#xFF1A;&#x627E;&#x5230;&#x5F53;&#x524D;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x4EE3;&#x7801;&#x3002;<br>2&#xFF1A;&#x5728;&#x6B64;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x6267;&#x884C;&#x524D;&#xFF0C;&#x5F00;&#x59CB;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x3002;<br>3&#xFF1A;&#x5EFA;&#x7ACB;&#x9636;&#x6BB5;&#xFF1A;<br>     &#x3000;&#x3000;&#x3000;&#x5EFA;&#x7ACB;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#xFF1A;<br>        &#x3000;&#x3000;&#x3000;&#x5EFA;&#x7ACB;arguments&#x3002;&#x68C0;&#x67E5;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x7684;&#x53C2;&#x6570;(&#x5C31;&#x662F;function(i)&#x4E2D;&#x7684;i)&#xFF1B;&#x5EFA;&#x7ACB;&#x8BE5;&#x5BF9;&#x8C61;&#x4E0B;&#x7684;&#x5C5E;&#x6027;&#x548C;&#x5C5E;&#x6027;&#x503C;&#xFF08;undefined&#xFF09;&#x3002;<br>        &#x3000;&#x3000;&#x3000;&#x68C0;&#x67E5;&#x5F53;&#x524D;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x7684;&#x51FD;&#x6570;&#x58F0;&#x660E;&#xFF1A;&#x6BCF;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x58F0;&#x660E;&#xFF0C;&#x5C31;&#x5728;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#x4E0B;&#x7528;&#x51FD;&#x6570;&#x540D;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x5C5E;&#x6027;&#x5C5E;&#x6027;&#x503C;&#x662F;&#x6307;&#x5411;&#x8BE5;&#x51FD;&#x6570;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x5730;&#x5740;&#x7684;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#x3002;<b>&#x82E5;&#x4E0A;&#x8FF0;&#x51FD;&#x6570;&#x540D;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x4E8E;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#x4E2D;&#xFF0C;&#x5219;&#x5BF9;&#x5E94;&#x7684;&#x5C5E;&#x6027;&#x503C;&#x4F1A;&#x88AB;&#x65B0;&#x7684;&#x5F15;&#x7528;&#x8986;&#x76D6;</b><br>          &#x3000;&#x68C0;&#x67E5;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#xFF1A; &#x6BCF;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#xFF0C;&#x7528;&#x53D8;&#x91CF;&#x540D;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x5C5E;&#x6027;&#xFF0C;&#x5C5E;&#x6027;&#x503C;&#x4E3A;undefied&#x3002;<b>&#x82E5;&#x53D8;&#x91CF;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#xFF0C;&#x5219;&#x8DF3;&#x8FC7;</b>&#xFF08;&#x8FD9;&#x662F;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x6307;&#x5411;&#x51FD;&#x6570;&#x7684;&#x5C5E;&#x6027;&#x503C;&#x88AB;&#x53D8;&#x91CF;&#x7684;undefined&#x8986;&#x76D6;&#xFF09;<br>            &#x3000;&#x521D;&#x59CB;&#x5316;&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#x3002;<br>              &#x786E;&#x5B9A;this&#x7684;&#x6307;&#x5B9A;&#x5BF9;&#x8C61;&#x3002;<br>&#x5728;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x9636;&#x6BB5;&#x6267;&#x884C;&#x51FD;&#x6570;&#x4F53;&#x4E2D;&#x4EE3;&#x7801;&#xFF0C;&#x4E00;&#x884C;&#x4E00;&#x884C;&#x6267;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x7ED9;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#x4E2D;&#x7684;&#x5C5E;&#x6027;&#x8D4B;&#x503C;&#x3002;</p>
+<h4 id="&#x5982;&#x679C;&#x628A;&#x6267;&#x884C;&#x73AF;&#x5883;&#x5F53;&#x6210;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;"><a href="#&#x5982;&#x679C;&#x628A;&#x6267;&#x884C;&#x73AF;&#x5883;&#x5F53;&#x6210;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;" class="headerlink" title="&#x5982;&#x679C;&#x628A;&#x6267;&#x884C;&#x73AF;&#x5883;&#x5F53;&#x6210;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;"></a>&#x5982;&#x679C;&#x628A;&#x6267;&#x884C;&#x73AF;&#x5883;&#x5F53;&#x6210;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;</h4><p>&#x8FD9;&#x662F;&#x7F51;&#x4E0A;&#x4E00;&#x4E2A;&#x5F88;&#x7ECF;&#x5178;&#x7684;&#x89E3;&#x91CA;&#xFF0C;&#x5B83;&#x628A;&#x6267;&#x884C;&#x73AF;&#x5883;&#x770B;&#x6210;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x5BF9;&#x8C61;&#x4E2D;&#x5305;&#x542B;&#x4E86;3&#x4E2A;&#x5C5E;&#x6027;:</p>
+<pre><code>excutionContextObj = {
+variableobject :{/*arguments&#xFF0C;&#x53C2;&#x6570;&#xFF0C;&#x51FD;&#x6570;&#x58F0;&#x660E;&#xFF0C;&#x53D8;&#x91CF;*/}
+scopeChain :{/*&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#x4EE5;&#x53CA;&#x7236;&#x7EA7;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;*/}
+this&#xFF1A;{}
+}
+</code></pre><p>&#x4E3E;&#x4E2A;&#x6817;&#x5B50;&#xFF1A;</p>
+<pre><code>function test(i) {
+ var a = &apos;hello&apos;;
+ var b = function privateB{};
+ function c(){
+ }
+}
+test(11);
+</code></pre><p>&#x8C03;&#x7528;test(22)&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6267;&#x884C;&#x73AF;&#x5883;&#x5EFA;&#x7ACB;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>testExcutionContext = {
+  variableObject : {
+             arguments :{
+                  0 : 22,
+                  length : 1
+              } ,  
+            i : 22,
+            c : pointer to function c(),
+            a : undefined,
+            b : undefined
+},
+ scopeChain : {.........},
+ this : {   }
+}
+</code></pre><p>&#x4EE3;&#x7801;&#x6267;&#x884C;&#x9636;&#x6BB5;&#xFF1A;</p>
+<pre><code> testExcutionContext = {
+  variableObject : {
+             arguments :{
+                  0 : 22,
+                  length : 1
+              } ,  
+            i : 22,
+            c : pointer to function c(),
+            a : hello,
+            b : pointer to function privateB()
+},
+ scopeChain : {.........},
+ this : {   }
+}
+</code></pre><p>&#x770B;&#x5230;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5C31;&#x77E5;&#x9053;&#x4E86;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x63D0;&#x5347;&#x7684;&#x5185;&#x6DB5;&#x4E86;&#x5427;~<br><b>&#x5728;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x9636;&#x6BB5;&#x6267;&#x884C;&#x51FD;&#x6570;&#x4F53;&#x4E2D;&#x4EE3;&#x7801;&#xFF0C;&#x4E00;&#x884C;&#x4E00;&#x884C;&#x6267;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x7ED9;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#x4E2D;&#x7684;&#x5C5E;&#x6027;&#x8D4B;&#x503C;</b>&#x4EE3;&#x7801;&#x6267;&#x884C;&#x662F;&#x6309;&#x7167;&#x4ECE;&#x4E0A;&#x4E4B;&#x4E0B;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x800C;&#x89E3;&#x6790;&#x4E5F;&#x6709;&#x5176;&#x987A;&#x5E8F;&#x3002;.&#x503C;&#x5F97;&#x4E00;&#x63D0;&#x7684;&#x662F;&#xFF0C;&#x6267;&#x884C;&#x73AF;&#x5883;&#x5185;&#x91CD;&#x540D;&#x65F6;&#x7684;&#x8986;&#x76D6;&#x4E0E;&#x8DF3;&#x8FC7;&#x673A;&#x5236;&#xFF0C;&#x4E5F;&#x4F1A;&#x4EA7;&#x751F;&#x8BB8;&#x591A;&#x610F;&#x5411;&#x4E0D;&#x5230;&#x7684;&#x540E;&#x679C;&#xFF0C;&#x8FD9;&#x4E9B;&#x5728;&#x9762;&#x8BD5;&#x9898;&#x4E2D;&#x51FA;&#x73B0;&#x7684;&#x5C31;&#x9891;&#x7E41;&#x5566;~</p>
+<p>&#x6267;&#x884C;&#x73AF;&#x5883;&#x626F;&#x5B8C;&#x4E86;&#x6211;&#x4EEC;&#x6765;&#x7EE7;&#x7EED;&#x626F;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#x3002;<br>&#x4F5C;&#x7528;&#x57DF;scope&#x5728;&#x58F0;&#x660E;&#x51FD;&#x6570;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x88AB;&#x521B;&#x5EFA;&#x4E86;&#x3002;&#x6BCF;&#x5F53;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x4E00;&#x4E2A;scope&#x5E76;&#x52A0;&#x5165;&#x5230;scopchain&#x4E2D;&#x3002;&#x8FD9;&#x4E48;&#x4E00;&#x8BF4;&#x4F60;&#x5E94;&#x8BE5;&#x4E86;&#x89E3;&#x4E86;&#xFF0C; &#x4F5C;&#x7528;&#x57DF;&#x7684;&#x6982;&#x5FF5;&#x4E0E;&#x6267;&#x884C;&#x73AF;&#x5883;&#x5176;&#x5B9E;&#x6709;&#x6240;&#x91CD;&#x53E0;&#x3002;&#x5728;&#x4F5C;&#x7528;&#x4E0A;&#x4E5F;&#x662F;&#x6709;&#x76F8;&#x4F3C;&#x4E4B;&#x5904;&#x7684;&#xFF1A;&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#x7684;&#x4F5C;&#x7528;&#x662F;&#xFF0C;&#x4FDD;&#x8BC1;&#x5BF9;&#x6267;&#x884C;&#x73AF;&#x5883;&#x6709;&#x6743;&#x8BBF;&#x95EE;&#x7684;&#x6240;&#x6709;&#x53D8;&#x91CF;&#x548C;&#x51FD;&#x6570;&#x7684;&#x6709;&#x5E8F;&#x8BBF;&#x95EE;&#x3002;&#x6267;&#x884C;&#x73AF;&#x5883;&#x4F5C;&#x7528;&#x662F;&#x5B9A;&#x4E49;&#x4E86;&#x53D8;&#x91CF;&#x548C;&#x51FD;&#x6570;&#x8BBF;&#x95EE;&#x7684;&#x5176;&#x4ED6;&#x6570;&#x636E;&#xFF0C;&#x4EE5;&#x53CA;&#x51B3;&#x5B9A;&#x5404;&#x81EA;&#x884C;&#x4E3A;&#x3002;&#x800C;&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#x662F;&#x4FDD;&#x8BC1;&#x8BBF;&#x95EE;&#x7684;&#x6709;&#x5E8F;&#x6027;&#x3002;<br>&#x5728;&#x4E4B;&#x524D;&#x63D0;&#x5230;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x5BF9;&#x8C61;&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF1A;</p>
+<pre><code>scopeChain :{ /*&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#x4EE5;&#x53CA;&#x7236;&#x7EA7;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;*/}
+</code></pre><p>&#x4EC0;&#x4E48;&#x662F;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#x76F8;&#x4FE1;&#x5DF2;&#x7ECF;&#x4E0D;&#x7528;&#x518D;&#x89E3;&#x91CA;&#x4E86;&#x5427;~&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#x662F;&#x4E00;&#x4E2A;&#x5305;&#x4E00;&#x4E2A;&#xFF0C;&#x6700;&#x540E;&#x77E5;&#x9053;&#x5168;&#x5C40;&#x7684;&#x5927;&#x5305;&#x5305;&#x91CC;&#x7684;&#x3002;&#x6807;&#x8BC6;&#x7B26;&#x7684;&#x89E3;&#x6790;&#x662F;&#x6CBF;&#x7740;&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#x4E00;&#x7EA7;&#x4E00;&#x7EA7;&#x7684;&#x641C;&#x7D22;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x4ECE;&#x76EE;&#x524D;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x5F00;&#x59CB;&#x4E00;&#x5C42;&#x4E00;&#x5C42;&#x5411;&#x5916;&#x641C;&#x7D22;&#xFF0C;&#x77E5;&#x9053;&#x627E;&#x5230;&#x6807;&#x8BC6;&#x7B26;&#x3002;&#x82E5;&#x627E;&#x4E0D;&#x5230;&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4;&#x9519;&#x8BEF;&#x53D1;&#x751F;&#x3002;<br>&#x5BF9;&#x6BD4;&#x539F;&#x578B;&#x94FE;&#xFF0C;&#x539F;&#x578B;&#x94FE;&#x662F;&#x4E3A;&#x4E86;&#x627E;&#x5BF9;&#x8C61;&#x7684;&#x5C5E;&#x6027;&#x3002;&#x800C;&#x4F5C;&#x7528;&#x57DF;&#x94FE;&#x662F;&#x4E3A;&#x4E86;&#x627E;&#x6807;&#x8BC6;&#x7B26;&#x3002;&#x800C;&#x4E14;&#x4ED6;&#x4EEC;&#x7684;&#x6A21;&#x578B;&#x90FD;&#x662F;&#x94FE;&#x5F0F;&#x7684;&#x3002;&#x524D;&#x8005;&#x7684;&#x94FE;&#x662F;&#x6CBF;&#x7740;JS&#x5BF9;&#x8C61;&#x7684;&#x539F;&#x578B;&#xFF0C;&#x540E;&#x8005;&#x662F;&#x6CBF;&#x7740;&#x4F5C;&#x7528;&#x57DF;&#x7684;&#x5C42;&#x7EA7;&#x5173;&#x7CFB;&#x3002;</p>
+<h3 id="&#x7ED3;&#x8BED;"><a href="#&#x7ED3;&#x8BED;" class="headerlink" title="&#x7ED3;&#x8BED;"></a>&#x7ED3;&#x8BED;</h3><p>&#x5199;&#x7740;&#x5199;&#x7740;&#x53D1;&#x73B0;&#x5199;&#x4E86;&#x597D;&#x4E45;&#x4E86;&#x3002;&#x6709;&#x5173;&#x95ED;&#x5305;&#x7684;&#x5185;&#x5BB9;&#x7275;&#x626F;&#x5230;&#x5176;&#x5E94;&#x7528;&#xFF0C;&#x4E0B;&#x4E00;&#x5F20;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x8BE6;&#x7EC6;&#x7684;&#x8BB2;&#x89E3;&#x5427;~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/20/eight-post/" rel="next" title="几个浏览器的兼容性问题（IE6)">
+                <i class="fa fa-chevron-left"></i> 几个浏览器的兼容性问题（IE6)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/05/nine-post/" rel="prev" title="Essay">
+                Essay <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://raw.githubusercontent.com/johanzhu/johanzhu.github.io/master/images/avatar.PNG"
+               alt="Johan Zhu" />
+          <p class="site-author-name" itemprop="name">Johan Zhu</p>
+          <p class="site-description motion-element" itemprop="description">Time you enjoy wasting, was not wasted.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#执行环境与执行上下文"><span class="nav-number">1.1.</span> <span class="nav-text">执行环境与执行上下文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行环境是什么"><span class="nav-number">1.2.</span> <span class="nav-text">执行环境是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行环境的产生"><span class="nav-number">1.3.</span> <span class="nav-text">执行环境的产生</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数声明阶段："><span class="nav-number">1.4.</span> <span class="nav-text">函数声明阶段：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数调用阶段："><span class="nav-number">1.5.</span> <span class="nav-text">函数调用阶段：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如果把执行环境当成一个对象"><span class="nav-number">1.6.</span> <span class="nav-text">如果把执行环境当成一个对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">2.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johan Zhu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
