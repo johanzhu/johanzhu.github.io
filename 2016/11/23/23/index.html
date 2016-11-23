@@ -1,0 +1,721 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="react," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x524D;&amp;#x8A00;&amp;#x4ECA;&amp;#x5929;&amp;#x603B;&amp;#x7ED3;&amp;#x7684;&amp;#x95EE;&amp;#x9898;&amp;#x662F;&amp;#x4E4B;&amp;#x524D;&amp;#x81EA;&amp;#x5DF1;&amp;#x518D;segmentfault&amp;#x4E0A;&amp;#x81EA;&amp;#x95EE;&amp;#x81EA;&amp;#x7B54;&amp;#x7684;&amp;#x4E00;&amp;#x9053;&amp;#x9">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-redux数据流向总结">
+<meta property="og:url" content="http://yoursite.com/2016/11/23/23/index.html">
+<meta property="og:site_name" content="JohanZhu's Blog">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x4ECA;&amp;#x5929;&amp;#x603B;&amp;#x7ED3;&amp;#x7684;&amp;#x95EE;&amp;#x9898;&amp;#x662F;&amp;#x4E4B;&amp;#x524D;&amp;#x81EA;&amp;#x5DF1;&amp;#x518D;segmentfault&amp;#x4E0A;&amp;#x81EA;&amp;#x95EE;&amp;#x81EA;&amp;#x7B54;&amp;#x7684;&amp;#x4E00;&amp;#x9053;&amp;#x9">
+<meta property="og:updated_time" content="2016-11-23T04:08:25.505Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-redux数据流向总结">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x4ECA;&amp;#x5929;&amp;#x603B;&amp;#x7ED3;&amp;#x7684;&amp;#x95EE;&amp;#x9898;&amp;#x662F;&amp;#x4E4B;&amp;#x524D;&amp;#x81EA;&amp;#x5DF1;&amp;#x518D;segmentfault&amp;#x4E0A;&amp;#x81EA;&amp;#x95EE;&amp;#x81EA;&amp;#x7B54;&amp;#x7684;&amp;#x4E00;&amp;#x9053;&amp;#x9">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/23/23/"/>
+
+  <title> react-redux数据流向总结 | JohanZhu's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JohanZhu's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                react-redux数据流向总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-23T11:55:59+08:00" content="2016-11-23">
+              2016-11-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h3><p>&#x4ECA;&#x5929;&#x603B;&#x7ED3;&#x7684;&#x95EE;&#x9898;&#x662F;&#x4E4B;&#x524D;&#x81EA;&#x5DF1;&#x518D;segmentfault&#x4E0A;&#x81EA;&#x95EE;&#x81EA;&#x7B54;&#x7684;&#x4E00;&#x9053;&#x9898;&#x76EE;&#x3002;&#x8FD8;&#x662F;&#x653E;&#x5230;BLOG&#x91CC;&#x65B9;&#x4FBF;&#x81EA;&#x5DF1;&#x65E5;&#x540E;&#x6765;&#x770B;&#x3002;<br><a id="more"></a></p>
+<h3 id="Q"><a href="#Q" class="headerlink" title="Q"></a>Q</h3><p>&#x6700;&#x8FD1;&#x5728;&#x5B66;&#x4E60;redux&#xFF0C;&#x5173;&#x4E8E;action,store,reducer&#x611F;&#x89C9;&#x7406;&#x89E3;&#x8D77;&#x6765;&#x5E76;&#x4E0D;&#x56F0;&#x96BE;&#x3002;&#x3002;&#x3002;<br>&#x4F46;&#x662F;&#x7ED3;&#x5408;react,&#x4F7F;&#x7528;react-redux&#x4E2D;&#x7684;&#x4E00;&#x4E9B;API&#x8FDB;&#x884C;&#x7EC4;&#x4EF6;&#x7684;props&#x4E0E;aciton&#x548C;store&#x7684;&#x8FDE;&#x63A5;&#x65F6;&#x5C31;&#x5404;&#x79CD;&#x4E0D;&#x7406;&#x89E3;&#x4E86;&#x3002;&#x3002;&#x3002;<br>&#x9996;&#x5148;react-redux&#x4E2D;&#x6709;&#x5BB9;&#x5668;&#x7EC4;&#x4EF6;&#x548C;&#x5C55;&#x793A;&#x7EC4;&#x4EF6;&#x8FD9;&#x4E24;&#x4E2A;&#x6982;&#x5FF5;&#x3002;<br>&#x6211;&#x7684;&#x5C55;&#x793A;&#x7EC4;&#x4EF6;&#x5982;&#x4E0B;&#xFF1A;component/app.js</p>
+<pre><code>class AppComponent extends React.Component {
+
+  render() {
+  const { value, increment, decrement } = this.props;
+  return (
+     &lt;div&gt;
+      {value}&lt;button onClick={increment}&gt;&#x52A0;&lt;/button&gt;
+      &lt;button onClick={decrement}&gt;&#x51CF;&lt;/button&gt;
+  &lt;/div&gt;
+    );
+   }
+}
+
+AppComponent.propTypes = {
+  value: PropTypes.number.isRequired,
+  increment: PropTypes.func.isRequired,
+  decrement: PropTypes.func.isRequired
+};
+
+export default AppComponent;
+</code></pre><p>&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x6570;&#x5B57;&#xFF0C;&#x52A0;&#xFF0C;&#x51CF;&#x3002;&#x7136;&#x540E;&#x6211;&#x7684; reducer/counter.js</p>
+<pre><code>import {INCREMENT, DECREMENT} from &apos;../actions/const&apos;;
+const initialState = {
+  number: 0
+};
+function reducer(state = initialState, action) {
+    switch (action.type) {
+    case INCREMENT: {
+      return state.number + 1;
+    }
+    case DECREMENT: {
+      return state.number - 1;
+    }
+    default: {
+      return state;
+    }
+  }
+}
+module.exports = reducer;
+</code></pre><p>&#x6211;&#x7684;&#x521D;&#x59CB;state&#x662F;{number:0}&#x6700;&#x540E;&#x662F;&#x5173;&#x952E;&#x7684;container&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5BB9;&#x5668;&#x7EC4;&#x4EF6;&#xFF1A;container/app.js</p>
+<pre><code>import React, { Component, PropTypes } from &apos;react&apos;;
+import { increment, decrement } from &apos;../actions/&apos;;
+import { bindActionCreators } from &apos;redux&apos;;
+import { connect } from &apos;react-redux&apos;;
+import Main from &apos;../components/App&apos;;
+
+class App extends Component {
+  render() {
+    const {actions, counter} = this.props;
+    return &lt;Main actions={actions} counter={counter}/&gt;;
+  }
+}
+
+App.propTypes = {
+  actions: PropTypes.object.isRequired,
+  counter: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+  const props = { value: state.counter.number };
+  return props;
+}
+function mapDispatchToProps(dispatch) {
+  const actions = {increment,decrement};
+  const actionMap = { actions: bindActionCreators(actions, dispatch) };
+  return actionMap;
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+</code></pre><p>&#x8FD9;&#x91CC;&#x6709;&#x51E0;&#x4E2A;&#x95EE;&#x9898;&#xFF1A;<br>1&#xFF1A;&#x9996;&#x5148;&#xFF0C;&#x62A5;&#x9519;&#xFF1A;&#x5C55;&#x793A;&#x7EC4;&#x4EF6;&#x5185;&#x7684;props&#x5747;&#x62A5;&#x9519;<br>Failed prop type: Required prop (value,increment,decrement&#x8FD9;&#x4E09;&#x4E2A;props) was not specified in AppComponent.(&#x8BF4;&#x660E;&#x6211;&#x7684;3&#x4E2A;props&#x6CA1;&#x6709;&#x4E0E;action&#x548C;store&#x5185;&#x7684;state&#x8054;&#x7CFB;&#xFF1F;)</p>
+<p>2&#xFF1A;&#x6211;&#x662F;&#x6309;&#x7167;&#x5B98;&#x65B9;&#x7684;todoMVC&#x7684;&#x4EE3;&#x7801;&#x5199;&#x7684;&#x5BB9;&#x5668;&#x7EC4;&#x4EF6;&#x3002;&#x5176;&#x4E2D;&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x5355;&#x72EC;&#x52A0;&#x4E00;&#x4E2A; Class app&#xFF1F; &#x5176;&#x4E2D;return <main actions="{actions}" counter="{counter}/">&#x7684;action&#x548C;counter&#x5982;&#x4F55;&#x7406;&#x89E3;&#xFF1F;&#x662F;&#x4ECE;&#x54EA;&#x91CC;&#x4F20;&#x8FC7;&#x6765;&#x7684;&#xFF1F;</main></p>
+<p>3&#xFF1A; mapStateToProps&#x4E2D;state.counter&#x7684;counter&#x662F;&#x54EA;&#x91CC;&#x6765;&#x7684;&#xFF1F;&#xFF08;&#x6211;&#x770B;&#x7684;&#x8BB8;&#x591A;&#x4F8B;&#x5B50;&#x3002;&#x3002;&#x8FD9;&#x4E2A;state.&#x540E;&#x9762;&#x8DDF;&#x7684;&#x8C8C;&#x4F3C;&#x90FD;&#x662F;reducer&#x7684;&#x6587;&#x4EF6;&#x540D;&#x3002;&#xFF09; &#x7136;&#x540E;&#xFF0C;&#x6211;&#x7684;value&#x4E3A;&#x4EC0;&#x4E48;&#x6CA1;&#x6709;&#x53D6;&#x5230;reducer&#x5185;&#x7684;number&#xFF1A;0 &#x5462;&#xFF1F;</p>
+<p>4&#xFF1A;&#x6700;&#x540E;&#xFF0C;mapDispatchToProps&#x51FD;&#x6570;&#x5185;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x663E;&#x793A;&#x7684;&#x770B;&#x5230;&#x6211;&#x7EC4;&#x4EF6;&#x5185;&#x7684;increment&#x548C;&#x6211;&#x7684;action&#xFF1A;increment&#xFF08;decrement&#x540C;&#x7406;&#xFF09; &#x5EFA;&#x7ACB;&#x8054;&#x7CFB;&#xFF0C;&#x90A3;&#x4E48;action&#x548C;props&#x662F;&#x5982;&#x4F55;&#x8FDE;&#x63A5;&#x7684;&#x5462;&#xFF1F;</p>
+<h3 id="A"><a href="#A" class="headerlink" title="A"></a>A</h3><p>1&#xFF1A;&#x7B2C;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x3002;&#x4E3A;&#x4EC0;&#x4E48;&#x4F1A;&#x62A5;&#x9519;&#x3002;&#x662F;&#x56E0;&#x4E3A;&#x6211;&#x6839;&#x672C;&#x6CA1;&#x6709;&#x5C06;&#x7EC4;&#x5EFA;&#x5185;&#x7684;&#x4E09;&#x4E2A;props&#x4F20;&#x9012;&#x4E0B;&#x6765;&#x3002;</p>
+<pre><code>class App extends Component {
+  render() {
+  const {actions, counter} = this.props;
+  return &lt;Main actions={actions} counter={counter}/&gt;;
+   }
+}
+</code></pre><p>&#x5176;&#x4E2D;&#x7684;actions&#x548C;counter&#x662F;&#x4ECE;store&#x4E2D;&#x4F20;&#x9012;&#x8FC7;&#x6765;&#x7684;actions&#x548C;counter&#x3002;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x8FD9;&#x6837;&#x5199;&#xFF1A;</p>
+<pre><code>&lt;Main
+  value={counter.number}
+  increment={actions.increment}
+  decrement={actions.decrement}
+/&gt;
+</code></pre><p>&#x9700;&#x8981;&#x5C06;&#x7EC4;&#x5EFA;&#x5185;&#x7684;props&#x4F20;&#x9012;&#x4E0B;&#x6765;&#xFF0C;&#x5E76;&#x4F20;&#x9012;state&#x548C;action&#x7ED9;&#x4ED6;&#x4EEC;&#x3002;&#x6211;&#x4EEC;&#x5728;&#x8FD9;&#x91CC;&#x5C31;&#x663E;&#x793A;&#x7684;&#x5EFA;&#x7ACB;&#x4E86;&#x8FDE;&#x63A5;&#x4E86;&#xFF01;<br>2&#xFF1A;&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x52A0;&#x4E00;&#x4E2A;Class app?actuions&#x548C;counter&#x54EA;&#x91CC;&#x6765;&#x7684;&#xFF1F;<br>&#x6211;&#x505A;&#x7684;&#x8FD9;&#x4E2A;&#x4F8B;&#x5B50;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x3002;&#x6240;&#x4EE5;&#x5176;&#x5B9E;&#x4E0D;&#x9700;&#x8981;&#x8FD9;&#x6837;&#x5199;&#x3002;<br>&#x4F46;&#x662F;&#x5982;&#x679C;&#xFF0C;container&#x5185;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x591A;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x9700;&#x8981;&#x5C06;&#x7EC4;&#x4EF6;&#x96C6;&#x4E2D;&#x8D77;&#x6765;&#xFF0C;&#x5C06;&#x6240;&#x6709;&#x7684;&#x7EC4;&#x4EF6;&#x5408;&#x5E76;&#x3002;<br>&#x81F3;&#x4E8E;&#xFF0C;actions&#x548C;counter&#x54EA;&#x91CC;&#x6765;&#x7684;&#x3002;&#x4E0A;&#x9762;&#x4E5F;&#x63D0;&#x5230;&#x4E86;&#x3002;&#x662F;&#x901A;&#x8FC7;connect&#x4F20;&#x9012;&#x8FC7;&#x6765;&#x7684;&#xFF01;<br>mapStateToProps&#x548C;mapDispatchToProps&#x4E00;&#x4E2A;&#x628A;store&#x4E2D;&#x7684;state&#x4F20;&#x9012;&#x4E86;&#x8FC7;&#x6765;&#xFF0C;&#x4E00;&#x4E2A;&#x628A;&#x7ED1;&#x5B9A;&#x597D;&#x7684;actions&#x4F20;&#x9012;&#x4E86;&#x8FC7;&#x6765;<br>3&#xFF0C;4&#xFF1A;&#x4E0A;&#x9762;&#x5176;&#x5B9E;&#x4E5F;&#x5DF2;&#x7ECF;&#x63D0;&#x5230;&#x4E86;&#x3002;</p>
+<pre><code>function mapStateToProps(state) {
+  const props = { counter: state.counter };
+  return props;
+}
+</code></pre><p>&#x5B83;&#x5C06;store&#x5185;counter&#x8FD9;&#x4E2A;reducer&#x5185;&#x7684;state&#x4F20;&#x9012;&#x7ED9;&#x4E86;counter&#xFF0C;&#x518D;&#x4F20;&#x9012;&#x7ED9;&#x4E86;&#x6211;&#x4EEC;&#x7684;&#x7EC4;&#x4EF6;&#x3002;</p>
+<pre><code>function mapDispatchToProps(dispatch) {
+  const actions = {increment,decrement};
+  const actionMap = { actions: bindActionCreators(actions, dispatch) };
+  return actionMap;
+}
+</code></pre><p>&#x5B83;&#x5C06;&#x6240;&#x6709;&#x7684;actions&#x7ED1;&#x5B9A;&#x5230;&#x4E86;store&#x4E0A;&#xFF0C;&#x7136;&#x540E;&#x7EC4;&#x4EF6;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;actions.<name of="" actions="">&#x4F20;&#x9012;action&#x7ED9;&#x6211;&#x4EEC;&#x7684;&#x7EC4;&#x4EF6;&#x6700;&#x540E;&#x3002;&#x8FD9;&#x51E0;&#x5904;&#x6539;&#x5B8C;&#x540E;&#xFF0C;&#x6211;&#x53D1;&#x73B0;&#x6211;&#x7684;reducer&#x4E5F;&#x5199;&#x9519;&#x4E86;&#x3002;&#x3002;&#x6211;&#x7684;state&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x5FC5;&#x987B;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x5426;&#x5219;reducer&#x5C31;&#x4E0D;&#x662F;&#x7EAF;&#x51FD;&#x6570;&#x4E86;</name></p>
+<pre><code> function reducer(state = initialState, action) {
+  const nextStateIn = { number: state.number + 1 };
+  const nextStateDe = { number: state.number - 1 };
+
+  switch (action.type) {
+    case INCREMENT: {
+      return nextStateIn;
+    }
+   case DECREMENT: {
+      return nextStateDe;
+    }
+    default: {
+      return state;
+    }
+  }
+}
+</code></pre><h3 id="&#x7ED3;&#x8BED;"><a href="#&#x7ED3;&#x8BED;" class="headerlink" title="&#x7ED3;&#x8BED;"></a>&#x7ED3;&#x8BED;</h3><p>&#x4E0A;&#x6B21;&#x7684;&#x7ED3;&#x5C3E;&#x9884;&#x544A;&#x662F;&#x5173;&#x4E8E;flex&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x521A;&#x597D;&#xFF0C;&#x4E4B;&#x524D;&#x7684;&#x516C;&#x53F8;&#x53D1;&#x6765;&#x7684;&#x6211;&#x6CA1;&#x505A;&#x597D;&#x7684;&#x590D;&#x8BD5;&#x9898;&#x76EE;&#x662F;&#x6709;&#x5173;&#x4E8E;&#x54CD;&#x5E94;&#x5F0F;&#x5F00;&#x53D1;&#x90A3;&#x4E48;&#x6211;&#x7ED3;&#x5408;flex&#x5E03;&#x5C40;&#xFF0C;&#x518D;&#x4E0B;&#x4E00;&#x7BC7;&#x603B;&#x7ED3;&#x4E00;&#x4E0B;&#x5427;&#xFF01;over&#x3002;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" rel="tag">#react</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/04/22/" rel="next" title="三只小猪被虐记">
+                <i class="fa fa-chevron-left"></i> 三只小猪被虐记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://raw.githubusercontent.com/johanzhu/johanzhu.github.io/master/images/avatar.PNG"
+               alt="Johan Zhu" />
+          <p class="site-author-name" itemprop="name">Johan Zhu</p>
+          <p class="site-description motion-element" itemprop="description">Time you enjoy wasting, was not wasted.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q"><span class="nav-number">2.</span> <span class="nav-text">Q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A"><span class="nav-number">3.</span> <span class="nav-text">A</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Johan Zhu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
