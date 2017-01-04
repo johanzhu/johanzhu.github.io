@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="javascript," />
+  <meta name="keywords" content="vue," />
 
 
 
@@ -84,16 +84,19 @@
 
 
 
-<meta name="description" content="&amp;#x56E0;&amp;#x4E3A;&amp;#x770B;&amp;#x5230;&amp;#x73B0;&amp;#x5728;&amp;#x62DB;&amp;#x8058;&amp;#x8981;&amp;#x6C42;&amp;#x90FD;&amp;#x9700;&amp;#x8981;&amp;#x638C;&amp;#x63E1;&amp;#x4E00;&amp;#x4E2A;MVC&amp;#x6846;&amp;#x67B6;&amp;#xFF0C;&amp;#x5E76;&amp;#x80FD;&amp;#x591F;&amp;#x7528;&amp;#x51">
+<meta name="description" content="&amp;#x524D;&amp;#x8A00;&amp;#x8DDD;&amp;#x79BB;&amp;#x4E0A;&amp;#x6B21;&amp;#x5199;blog&amp;#x9694;&amp;#x4E86;&amp;#x597D;&amp;#x4E45;&amp;#x597D;&amp;#x4E45;&amp;#x3002;&amp;#x4ECA;&amp;#x5929;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x6765;&amp;#x603B;&amp;#x7ED3;&amp;#x4E00;&amp;#x4E0B;vuex">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ES6的模块功能">
-<meta property="og:url" content="http://yoursite.com/2016/10/11/12/index.html">
+<meta property="og:title" content="vuex数据流向总结">
+<meta property="og:url" content="http://yoursite.com/2017/01/04/25/index.html">
 <meta property="og:site_name" content="JohanZhu's Blog">
-<meta property="og:description" content="&amp;#x56E0;&amp;#x4E3A;&amp;#x770B;&amp;#x5230;&amp;#x73B0;&amp;#x5728;&amp;#x62DB;&amp;#x8058;&amp;#x8981;&amp;#x6C42;&amp;#x90FD;&amp;#x9700;&amp;#x8981;&amp;#x638C;&amp;#x63E1;&amp;#x4E00;&amp;#x4E2A;MVC&amp;#x6846;&amp;#x67B6;&amp;#xFF0C;&amp;#x5E76;&amp;#x80FD;&amp;#x591F;&amp;#x7528;&amp;#x51">
-<meta property="og:updated_time" content="2016-10-15T02:29:47.938Z">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x8DDD;&amp;#x79BB;&amp;#x4E0A;&amp;#x6B21;&amp;#x5199;blog&amp;#x9694;&amp;#x4E86;&amp;#x597D;&amp;#x4E45;&amp;#x597D;&amp;#x4E45;&amp;#x3002;&amp;#x4ECA;&amp;#x5929;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x6765;&amp;#x603B;&amp;#x7ED3;&amp;#x4E00;&amp;#x4E0B;vuex">
+<meta property="og:image" content="http://yoursite.com/2017/01/04/25/./images/vuex.png">
+<meta property="og:image" content="http://yoursite.com/2017/01/04/25/./images/tree.png">
+<meta property="og:updated_time" content="2017-01-04T08:25:47.353Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ES6的模块功能">
-<meta name="twitter:description" content="&amp;#x56E0;&amp;#x4E3A;&amp;#x770B;&amp;#x5230;&amp;#x73B0;&amp;#x5728;&amp;#x62DB;&amp;#x8058;&amp;#x8981;&amp;#x6C42;&amp;#x90FD;&amp;#x9700;&amp;#x8981;&amp;#x638C;&amp;#x63E1;&amp;#x4E00;&amp;#x4E2A;MVC&amp;#x6846;&amp;#x67B6;&amp;#xFF0C;&amp;#x5E76;&amp;#x80FD;&amp;#x591F;&amp;#x7528;&amp;#x51">
+<meta name="twitter:title" content="vuex数据流向总结">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x8DDD;&amp;#x79BB;&amp;#x4E0A;&amp;#x6B21;&amp;#x5199;blog&amp;#x9694;&amp;#x4E86;&amp;#x597D;&amp;#x4E45;&amp;#x597D;&amp;#x4E45;&amp;#x3002;&amp;#x4ECA;&amp;#x5929;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x6765;&amp;#x603B;&amp;#x7ED3;&amp;#x4E00;&amp;#x4E0B;vuex">
+<meta name="twitter:image" content="http://yoursite.com/2017/01/04/25/./images/vuex.png">
 
 
 
@@ -114,9 +117,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/10/11/12/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/01/04/25/"/>
 
-  <title> ES6的模块功能 | JohanZhu's Blog </title>
+  <title> vuex数据流向总结 | JohanZhu's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +259,7 @@
             
             
               
-                ES6的模块功能
+                vuex数据流向总结
               
             
           </h1>
@@ -268,8 +271,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-11T21:54:01+08:00" content="2016-10-11">
-              2016-10-11
+            <time itemprop="dateCreated" datetime="2017-01-04T14:24:18+08:00" content="2017-01-04">
+              2017-01-04
             </time>
           </span>
 
@@ -315,23 +318,9 @@
       
 
       
-        <p>&#x56E0;&#x4E3A;&#x770B;&#x5230;&#x73B0;&#x5728;&#x62DB;&#x8058;&#x8981;&#x6C42;&#x90FD;&#x9700;&#x8981;&#x638C;&#x63E1;&#x4E00;&#x4E2A;MVC&#x6846;&#x67B6;&#xFF0C;&#x5E76;&#x80FD;&#x591F;&#x7528;&#x5176;&#x5236;&#x4F5C;&#x5BCC;&#x5E94;&#x7528;&#x3002;&#x800C;&#x4E4B;&#x524D;&#x53C8;&#x5B66;&#x8FC7;React(&#x867D;&#x7136;&#x5B83;&#x4E0D;&#x662F;&#x5B8C;&#x6574;&#x7684;MVC&#x6846;&#x67B6;)&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x6765;&#x91CD;&#x65B0;&#x7814;&#x7A76;&#xFF0C;&#x5E76;&#x5B66;&#x4E60;&#x4E00;&#x4E0B;react-router&#xFF0C;&#x6765;&#x5B8C;&#x6210;&#x4E00;&#x4E2A;SPA&#x3002;<br>&#x518D;&#x770B;&#x4E86;&#x522B;&#x4EBA;&#x7684;DEMO&#x4E4B;&#x540E;&#xFF0C;&#x53D1;&#x73B0;&#x522B;&#x4EBA;&#x7684;components&#x91CC;&#x9762;&#x6709;&#x8BB8;&#x591A;&#x4E2A;&#x6587;&#x4EF6;&#x3002;&#x800C;&#x4E4B;&#x524D;&#x7684;&#x89C6;&#x9891;&#x6559;&#x7A0B;&#x4E2D;&#x53EA;&#x7528;&#x4E86;&#x4E00;&#x4E2A;JS&#x6587;&#x4EF6;&#x5E76;&#x4E14;&#x6240;&#x6709;&#x7684;react&#x7EC4;&#x4EF6;&#x90FD;&#x5199;&#x5728;&#x4E00;&#x4E2A;JS&#x6587;&#x4EF6;&#x91CC;&#x9762;&#x3002;&#x4E8E;&#x662F;&#x5C31;&#x60F3;&#x7740;&#x6A21;&#x4EFF;&#x7740;&#x628A;&#x81EA;&#x68C0;&#x5206;&#x5F00;&#x6765;&#x5199;&#x3002;&#x5168;&#x90E8;&#x50CF;&#x642D;&#x79EF;&#x6728;&#x4E00;&#x6837;&#x5199;&#x5728;&#x4E00;&#x4E2A;JS&#x6587;&#x4EF6;&#x91CC;&#x771F;&#x7684;&#x5F88;&#x4E0D;&#x65B9;&#x4FBF;&#x9605;&#x8BFB;&#x3002;<br><a id="more"></a><br>&#x4F46;&#x662F;&#x5728;&#x7528;ES6&#x7684;&#x6A21;&#x5757;&#x529F;&#x80FD;&#x7684;&#x65F6;&#x5019;&#x53D1;&#x73B0;&#x95EE;&#x9898;&#x4E86;&#xFF01;import &#x7684;&#x6A21;&#x5757;&#x65E0;&#x6CD5;&#x88AB;&#x5229;&#x7528;&#xFF01;&#x800C;&#x4E14;&#x4E4B;&#x524D;&#x7684;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x4E5F;&#x6CA1;&#x6709;&#x89E3;&#x51B3;&#xFF0C;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x4E2D;&#x660E;&#x660E;&#x58F0;&#x660E;&#x7684;class &#x7684;&#x540D;&#x79F0;&#x662F;AppComponent,&#x4F46;&#x662F;&#x5199;&#x7684;&#x65F6;&#x5019;&#x786E;&#x662F;&#xFF1A;<br>import App from &#x2018;./components/main&#x2019;&#x3002;<br>&#x540D;&#x79F0;&#x4E0D;&#x5BF9;&#x5E94;&#x3002;<br>&#x5728;&#x7EA0;&#x7ED3;&#x4E86;&#x5F88;&#x4E45;&#x5F88;&#x4E45;&#x4E4B;&#x540E;&#x67E5;&#x4E86;&#x4E00;&#x4E0B;ES6&#x6A21;&#x5757;&#x5316;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF0C;&#x53D1;&#x73B0;&#x4E86;&#x95EE;&#x9898;&#x6240;&#x5728;&#x3002;<br>export default&#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x6A21;&#x5757;&#x7684;&#x9ED8;&#x8BA4;&#x8F93;&#x51FA;&#x3002;<b>&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x7684;&#x8F93;&#x51FA;</b>&#xFF0C;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x53EA;&#x53EF;&#x4EE5;&#x7528;&#x4E00;&#x6B21;&#xFF01;&#x6240;&#x4EE5;import&#x547D;&#x4EE4;&#x540E;&#x9762;&#x624D;&#x4E0D;&#x9700;&#x8981;&#x8DDF;&#x5927;&#x62EC;&#x53F7;&#x3002;&#x76F8;&#x53CD;&#x5176;&#x4ED6;&#x7684;export&#x8F93;&#x51FA;&#x53EF;&#x4EE5;&#x6709;&#x5F88;&#x591A;&#x4E2A;&#xFF0C;&#x4E14; import&#x7684;&#x65F6;&#x5019;&#x5FC5;&#x987B;&#x8981;&#x8DDF;&#x5927;&#x62EC;&#x53F7;&#xFF01;</p>
-<pre><code>//a.js
-function add(a,b){
-       return a+b
-}
-export { add as default};
-//&#x7B49;&#x540C;&#x4E8E; export default add;
-//app.js
-import {default as XXX} from &apos;a&apos;
-//&#x7B49;&#x540C;&#x4E8E; import xxx from &apos;a&apos;
-</code></pre><p>&#x6B63;&#x662F;&#x56E0;&#x4E3A;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x53EA;&#x8F93;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x53EB;default&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x6240;&#x4EE5;&#x540E;&#x9762;&#x4E0D;&#x53EF;&#x4EE5;&#x8DDF;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#xFF01;<br>&#x6211;&#x4EEC;&#x53EA;&#x80FD; </p>
-<pre><code>export var a=1;
-//&#x6216;&#x8005;var a=1;
-//export default a;
-//export {a}
-</code></pre><p>&#x518D;&#x5C31;&#x662F;&#x5173;&#x4E8E;&#x8DEF;&#x5F84;&#x7684;&#x95EE;&#x9898;&#x4E86;&#xFF01;<br>&#x672C;&#x65B0;&#x624B;&#x5C31;&#x662F;&#x5728;&#x8FD9;&#x91CC;&#x8E29;&#x5F97;&#x5751;&#x3002;&#x3002;&#x3002;<br>&#x5982;&#x679C;import * as obj from &#x2018;exports&#x2019;<br>//&#x90A3;&#x4E48;node&#x4F1A;&#x8BD5;&#x7740;&#x53BB;&#x5BFB;&#x627E;node_modules&#x4E2D;&#x7684;exports&#x6A21;&#x5757;<br>&#x5C31;&#x7B97;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#x5185;&#xFF0C;&#x4E5F;&#x8981;&#x52A0;&#x4E0A;<b>./</b>&#x624D;&#x80FD;&#x5F15;&#x5165;&#x6B63;&#x786E;&#x7684;&#x6A21;&#x5757;&#x3002;&#x4E0D;&#x662F;&#x7528;&#x76F8;&#x5BF9;&#x6216;&#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;&#x5C31;&#x4F1A;&#x53BB;&#x4F9D;&#x8D56;&#x5305;&#x6587;&#x4EF6;&#x5939;&#x91CC;&#x53BB;&#x627E;&#xFF01;<br>(&#x4E0A;&#x9762;&#x901A;&#x914D;&#x7B26;&#x7684;&#x5199;&#x6CD5;&#x662F;&#x628A;&#x6240;&#x6709;&#x7684;&#x8F93;&#x51FA;&#x5305;&#x88F9;&#x5728;obj&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x91CC;&#x3002;)</p>
-<h3 id="&#x7ED3;&#x8BED;"><a href="#&#x7ED3;&#x8BED;" class="headerlink" title="&#x7ED3;&#x8BED;"></a>&#x7ED3;&#x8BED;</h3><p>&#x8FD9;&#x51E0;&#x5929;&#x7528;webpack&#x6253;&#x5305;react-router demo&#x7684;&#x65F6;&#x5019;&#x9047;&#x5230;&#x6570;&#x4E0D;&#x5C3D;&#x7684;&#x5751;&#x3002;&#x3002;&#x3002;&#x8DEF;&#x5F84;&#x5B8C;&#x5168;&#x641E;&#x4E0D;&#x61C2;&#x662F;&#x600E;&#x4E48;&#x56DE;&#x4E8B;&#x3002;&#x3002;&#x4E0B;&#x4E24;&#x7BC7;&#x4F1A;&#x603B;&#x7ED3;HTTP&#x76F8;&#x5173;&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x4EE5;&#x53CA;&#x5173;&#x4E8E;JS&#x91CC;&#x5F15;&#x7528;&#x5BF9;&#x8C61;&#x7684;&#x5B8C;&#x5168;&#x590D;&#x5236;&#x95EE;&#x9898;&#xFF01;</p>
+        <h3 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h3><p>&#x8DDD;&#x79BB;&#x4E0A;&#x6B21;&#x5199;blog&#x9694;&#x4E86;&#x597D;&#x4E45;&#x597D;&#x4E45;&#x3002;&#x4ECA;&#x5929;&#x4E3B;&#x8981;&#x662F;&#x6765;&#x603B;&#x7ED3;&#x4E00;&#x4E0B;vuex&#x4E2D;&#x7684;&#x6570;&#x636E;&#x6D41;&#x5411;&#x7684;&#x95EE;&#x9898;&#x3002;<br>&#x7FFB;&#x770B;&#x4E0A;&#x6B21;&#x5199;&#x7684;react-redux&#x7684;&#x603B;&#x7ED3;&#xFF0C;&#x53D1;&#x73B0;&#x6700;&#x540E;&#x7684;&#x9884;&#x544A;&#x662F;&#x5199;&#x5173;&#x4E8E;flex&#x5E03;&#x5C40;&#x3002;flex&#x9700;&#x8981;IE11&#x4EE5;&#x4E0A;&#x624D;&#x80FD;&#x591F;&#x4F7F;&#x7528;&#xFF0C;&#x7136;&#x800C;&#x7531;&#x4E8E;&#x73B0;&#x5728;&#x505A;webApp&#x4E0D;&#x7528;&#x7BA1;IE&#xFF0C;&#x800C;&#x4E14;vue&#x4E5F;&#x662F;&#x9700;&#x8981;IE8&#x4EE5;&#x4E0A;&#xFF0C;&#x6240;&#x4EE5;flex&#x5E03;&#x5C40;&#x4E5F;&#x65F6;&#x975E;&#x5E38;&#x5B9E;&#x7528;&#x7684;&#x3002;&#x90A3;&#x4E48;&#x4E0B;&#x4E00;&#x6B21;&#x7ED3;&#x5408;vue&#xFF0C;&#x505A;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5C0F;&#x5B9E;&#x9A8C;&#xFF0C;vue+flex+vw,wh&#x6765;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x54CD;&#x5E94;&#x5F0F;&#x7684;&#x9875;&#x9762;&#xFF0C;&#x4F9D;&#x6B21;&#x6765;&#x5BF9;flex&#x5E03;&#x5C40;&#x8FDB;&#x884C;&#x603B;&#x7ED3;&#x5427;&#x3002;<br><a id="more"></a></p>
+<h3 id="&#x6B63;&#x6587;"><a href="#&#x6B63;&#x6587;" class="headerlink" title="&#x6B63;&#x6587;"></a>&#x6B63;&#x6587;</h3><p>vuex&#x662F;&#x9488;&#x5BF9;vue&#x7684;&#x4E00;&#x5957;&#x6570;&#x636E;&#x7BA1;&#x7406;&#x7684;&#x72B6;&#x6001;&#x7BA1;&#x7406;&#x6A21;&#x5F0F;&#x3002;&#x542C;&#x540D;&#x5B57;&#x5C31;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x5B83;&#x4E5F;&#x65F6;&#x80FD;&#x591F;&#x8FFD;&#x6EAF;&#x5230;flux&#x67B6;&#x6784;&#x7684;&#xFF0C;&#x8FD9;&#x79CD;&#x67B6;&#x6784;&#x975E;&#x5E38;&#x6E05;&#x6670;&#x7684;&#x5C06;web&#x5E94;&#x7528;&#x7684;&#x5206;&#x5DE5;&#x8FDB;&#x884C;&#x4E86;&#x7CBE;&#x7F8E;&#x7684;&#x5212;&#x5206;&#x3002;<br>&#x8C08;&#x5230;flux&#x5C31;&#x5FC5;&#x987B;&#x8C08;&#x5230;&#x4E09;&#x4E2A;&#x6982;&#x5FF5;&#x4E86; store action view.&#x4EE5;&#x6211;&#x7684;&#x7406;&#x89E3;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;web&#x524D;&#x6BB5;&#x91CC;&#x7684;mvc&#x3002;&#x7528;&#x6237;&#x901A;&#x8FC7;view&#x89E6;&#x53D1;action&#xFF0C;action&#x6539;&#x53D8;store&#xFF0C;store&#x66F4;&#x65B0;&#x540E;&#x6539;&#x53D8;view&#x3002;<br>flux&#x672C;&#x8EAB;&#x7684;&#x610F;&#x601D;&#x4E5F;&#x5C31;&#x662F;&#x6EB6;&#x89E3;&#xFF0C;redux&#x662F;&#x501F;&#x9274;&#x4E86;flux&#x7684;&#x601D;&#x60F3;&#xFF0C;&#x901A;&#x8FC7;&#x5F15;&#x5165;reducer&#x5C06;&#x6574;&#x4E2A;&#x7ED3;&#x6784;&#x53D8;&#x5F97;&#x66F4;&#x7CBE;&#x7F8E;&#x4E86;~<br>&#x5728;vuex&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x7684;mutations&#x5176;&#x5B9E;&#x76F8;&#x5F53;&#x4E8E;redux&#x4E2D;&#x7684;reducer&#x3002;<br>&#x90A3;&#x4E48;vuex&#x7684;&#x6574;&#x4E2A;&#x5168;&#x8C8C;&#x662F;&#x600E;&#x4E48;&#x6837;&#x7684;&#x5462;&#xFF1F;<br><img src="/2017/01/04/25/./images/vuex.png" alt="enter description here" title="vuex.png"><br>&#x4ECE;&#x56FE;&#x4E0A;&#x53EF;&#x4EE5;&#x6E05;&#x6670;&#x7684;&#x770B;&#x5230;&#x6574;&#x4E2A;&#x7ED3;&#x6784;&#xFF0C;action&#x662F;mutation&#x7684;&#x7EC4;&#x5408;&#xFF0C;mutation&#x6539;&#x53D8;state&#xFF0C;&#x4ECE;&#x800C;&#x6539;&#x53D8;&#x6211;&#x4EEC;view&#xFF0C;&#x7528;&#x6237;&#x6765;&#x89E6;&#x53D1;actions&#x3002;&#x503C;&#x5F97;&#x4E00;&#x63D0;&#x7684;&#x662F;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5212;&#x5206;&#x5C0F;&#x7684;&#x6A21;&#x5757;&#xFF0C;&#x5728;&#x6A21;&#x5757;&#x5185;&#x4E5F;&#x6709;&#x5BF9;&#x5E94;&#x7684;actions,mutations,state&#xFF0C;&#x8FD9;&#x6837;&#x4E00;&#x6765;&#x6574;&#x4E2A;&#x5927;&#x7684;store&#x4E5F;&#x5C31;&#x6784;&#x5EFA;&#x4E86;&#x8D77;&#x6765;&#xFF01;<br>&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x662F;&#x7C7B;&#x4F3C;&#x8FD9;&#x6837;&#x7684;<br><img src="/2017/01/04/25/./images/tree.png" alt="enter description here" title="tree.png"><br>&#x6574;&#x4E2A;store&#x6570;&#x91CC;&#x5206;&#x4E3A;modules&#x6A21;&#x5757;&#xFF0C;&#x6A21;&#x5757;&#x5185;&#x6709;&#x5BF9;&#x5E94;&#x7684;actions,mutations,getters&#xFF0C;&#x5927;&#x7684;store&#x4E5F;&#x6709;actions,mutations,getters&#xFF0C;&#x9876;&#x5C42;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;state.(&#x6A21;&#x5757;&#x540D;&#x5B57;)&#x6765;&#x8BBF;&#x95EE;&#x5230;&#x6A21;&#x5757;&#x7684;state&#x3002;mutation-types&#x662F;&#x628A;mutations&#x8FDB;&#x884C;&#x4E86;&#x547D;&#x540D;&#x7684;&#x5F52;&#x7C7B;&#xFF0C;&#x8FD9;&#x8DDF;redux&#x4E5F;&#x5F88;&#x50CF;&#x3002;<br>&#x7136;&#x540E;&#x662F;&#x5173;&#x4E8E;actions&#x548C;mutation&#x7684;payload&#xFF0C;&#x5F00;&#x59CB;&#x4E00;&#x76F4;&#x6CA1;&#x660E;&#x767D;payload&#x548C;state&#x662F;&#x5982;&#x4F55;&#x8054;&#x7CFB;&#x7684;&#x3002;&#x4EE5;&#x53CA;actions&#x548C;mutations&#x4E2D;&#x7684;commit&#x662F;&#x600E;&#x4E48;&#x6765;&#x7684;&#x3002;<br>&#x9996;&#x5148;payload&#xFF0C;&#x662F;&#x4F60;&#x9700;&#x8981;&#x4F20;&#x9012;&#x7ED9;mutation&#x548C;actions&#x7684;&#x53C2;&#x6570;&#x5B9E;&#x9645;&#x4F20;&#x5165;&#x7684;&#x5BF9;&#x8C61;&#x6216;&#x8005;&#x503C;&#x662F;&#x5728;&#x7EC4;&#x4EF6;&#x5185;&#x5199;&#x903B;&#x8F91;&#x7684;&#x65F6;&#x5019;&#x5C06;&#x503C;&#x4F20;&#x5165;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x662F;state&#xFF0C;getters&#x3002;&#x5F53;&#x7136;&#xFF0C;&#x901A;&#x8FC7;&#x89E3;&#x6784;&#x8D4B;&#x503C;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4ECE;&#x4F20;&#x5165;&#x7684;&#x503C;&#x5185;&#xFF0C;&#x628A;&#x6240;&#x9700;&#x8981;&#x7684;&#x53C2;&#x6570;&#x4E2D;&#x7684;&#x503C;&#x5265;&#x79BB;&#x51FA;&#x6765;&#x5F53;&#x505A;payload&#x4F20;&#x9012;&#x7ED9;&#x6211;&#x4EEC;&#x7684;mutations,actions&#x3002;&#x5BF9;&#x4E86;&#xFF0C;&#x4E4B;&#x524D;&#x63D0;&#x5230;&#x7684;commit&#x4E5F;&#x662F;&#x901A;&#x89E3;&#x6784;&#x8D4B;&#x503C;&#x4F20;&#x9012;&#x7684;&#xFF0C;actions&#x62E5;&#x6709;context&#x5BF9;&#x8C61;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x89E3;&#x6784;&#x5C06;state,commit,getters,dispatch&#xFF08;action&#x8C03;&#x7528;action&#xFF09;&#x62BD;&#x53D6;&#x6765;&#x4F7F;&#x7528;&#x3002;<br>&#x6700;&#x540E;&#x662F;mapstate,mapgetters,mapActions,mapmutations&#x3002;<br>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;import {} from &#x2018;vuex&#x2019;&#x6765;&#x5F15;&#x5165;&#xFF0C;&#x8FD9;&#x51E0;&#x4E2A;&#x51FD;&#x6570;&#x80FD;&#x591F;&#x5C06;&#x6240;&#x6709;&#x7684;state,getters,actions,mutations&#x5265;&#x79BB;&#x51FA;&#x6765;&#x65B9;&#x4FBF;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x3002;&#x5F53;&#x540C;&#x65F6;&#x5B58;&#x5728;vuex&#x5C5E;&#x6027;&#x548C;&#x81EA;&#x5DF1;&#x518D;&#x7EC4;&#x4EF6;&#x5185;&#x5B9A;&#x4E49;&#x7684;&#x5176;&#x4ED6;&#x5C5E;&#x6027;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x2026;mapstate,&#x2026;mapgetters,&#xFF08;ES7&#xFF09;&#x5BF9;&#x8C61;&#x5C55;&#x5F00;&#x7B26;&#xFF0C;&#x628A;&#x5F97;&#x5230;&#x7684;&#x5BF9;&#x8C61;&#x5C55;&#x5F00;&#x5230;compute,methods&#x4E2D;&#x6765;&#x4F7F;&#x7528;&#x3002;&#x8FD9;&#x4E9B;map&#x51FD;&#x6570;&#x8DDF;react-redux&#x4E2D;&#x4E24;&#x4E2A;mapStateToProps&#x548C;mapDispatchToProps&#x6709;&#x7C7B;&#x4F3C;&#x7684;&#x4F5C;&#x7528;&#x3002;&#x5C06;&#x7EC4;&#x4EF6;&#x548C;vuex&#x6570;&#x636E;&#x8FDB;&#x884C;&#x4E86;&#x8FDE;&#x63A5;&#x3002;</p>
+<h3 id="&#x7ED3;&#x8BED;"><a href="#&#x7ED3;&#x8BED;" class="headerlink" title="&#x7ED3;&#x8BED;"></a>&#x7ED3;&#x8BED;</h3><p>&#x524D;&#x8A00;&#x5DF2;&#x7ECF;&#x505A;&#x4E86;&#x9884;&#x544A;&#x4E86;&#x3002;&#x8FD9;&#x6B21;&#x603B;&#x7ED3;&#x975E;&#x5E38;&#x7684;&#x7B80;&#x5355;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x6316;&#x6398;&#x7684;&#x975E;&#x5E38;&#x6DF1;&#x5165;&#x3002;&#x901A;&#x8FC7;&#x5B66;&#x4E60;&#x8005;&#x4E24;&#x4E2A;&#x6846;&#x67B6;&#xFF0C;&#x5BF9;web&#x5982;&#x4ECA;&#x7684;&#x6F6E;&#x6D41;&#x66F4;&#x52A0;&#x7684;&#x6E05;&#x6670;&#x4E86;&#x3002;flux&#x771F;&#x7684;&#x662F;&#x975E;&#x5E38;&#x7684;&#x7CBE;&#x7F8E;&#x554A;&#xFF01;</p>
 
       
     </div>
@@ -353,7 +342,7 @@ import {default as XXX} from &apos;a&apos;
       
         <div class="post-tags">
           
-            <a href="/tags/javascript/" rel="tag">#javascript</a>
+            <a href="/tags/vue/" rel="tag">#vue</a>
           
         </div>
       
@@ -362,17 +351,13 @@ import {default as XXX} from &apos;a&apos;
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/10/eleven/" rel="next" title="有关面向对象与继承的总结">
-                <i class="fa fa-chevron-left"></i> 有关面向对象与继承的总结
+              <a href="/2016/11/24/24/" rel="next" title="三只小猪被虐记之二">
+                <i class="fa fa-chevron-left"></i> 三只小猪被虐记之二
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/15/13/" rel="prev" title="关于HTTP">
-                关于HTTP <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -486,7 +471,7 @@ import {default as XXX} from &apos;a&apos;
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">1.</span> <span class="nav-text">结语</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">3.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
           </div>
         </section>
