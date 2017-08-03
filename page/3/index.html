@@ -258,6 +258,131 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/08/seven-post/" itemprop="url">
+                  JS中的原型和原型链
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-08T13:55:19+08:00" content="2016-08-08">
+              2016-08-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Javascript学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h3><p>&#x8FD9;&#x7BC7;&#x5176;&#x5B9E;&#x62D6;&#x4E86;&#x76F8;&#x5F53;&#x4E45;&#x4E86;&#x3002;&#x662F;&#x56E0;&#x4E3A;&#x81EA;&#x5DF1;&#x5F88;&#x957F;&#x65F6;&#x95F4;&#x5BF9;&#x4E8E;&#x539F;&#x578B;&#x548C;&#x539F;&#x578B;&#x94FE;&#x7684;&#x6982;&#x5FF5;&#x4E0D;&#x662F;&#x5F88;&#x6E05;&#x695A;&#x3002;&#x73B0;&#x5728;&#x5DF2;&#x7ECF;&#x5927;&#x62B5;&#x5F04;&#x660E;&#x767D;&#x4E86;&#x3002;&#x90A3;&#x4E48;&#x4ECA;&#x5929;&#x6765;&#x603B;&#x7ED3;&#x4E00;&#x4E0B;&#x5427;~</p>
+<h4 id="&#x4E00;&#x4E2A;&#x9898;&#x76EE;"><a href="#&#x4E00;&#x4E2A;&#x9898;&#x76EE;" class="headerlink" title="&#x4E00;&#x4E2A;&#x9898;&#x76EE;"></a>&#x4E00;&#x4E2A;&#x9898;&#x76EE;</h4><p>&#x5728;&#x603B;&#x7ED3;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x653E;&#x4E0A;&#x4E00;&#x9053;&#x6211;&#x7EA0;&#x7ED3;&#x4E86;&#x5F88;&#x4E45;&#x5F88;&#x4E45;&#x7684;&#x9898;&#x76EE;&#xFF0C;&#x662F;&#x5728;&#x770B;&#x522B;&#x4EBA;&#x7684;&#x9762;&#x8BD5;&#x7ECF;&#x5386;&#x91CC;&#x9762;&#x770B;&#x5230;&#x7684;&#x3002;&#x4E0B;&#x9762;&#x8BC4;&#x8BBA;&#x8BF4;&#x8003;&#x5BDF;&#x4E86;&#x539F;&#x578B;&#x94FE;&#x7684;&#x77E5;&#x8BC6;&#x3002;&#x7ECF;&#x8FC7;&#x767E;&#x5EA6;&#x3002;&#x3002;&#x53D1;&#x73B0;&#x8FD9;&#x9053;&#x9898;&#x7B54;&#x6848;&#x8FD8;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x58F0;&#x97F3;&#x3002;&#x9042;&#x5F00;&#x59CB;&#x4E86;&#x6211;&#x7684;&#x5F04;&#x61C2;&#x539F;&#x578B;&#x94FE;&#x7684;&#x5386;&#x7A0B;&#x3002;</p>
+<pre><code>var F=function(){
+};
+Object.prototype.a=function(){
+};
+Function.prototype.b=function(){
+};
+var f=new F();
+f&#x80FD;&#x62FF;&#x5230;a&#x548C;b&#x5417;&#xFF1F;
+</code></pre><p>&#x5148;&#x516C;&#x5E03;&#x7B54;&#x6848;&#x5427;~&#x80FD;&#x62FF;&#x5230;a&#x4E0D;&#x80FD;&#x62FF;&#x5230;b&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x8FDB;&#x884C;&#x5BA1;&#x67E5;&#x7684;&#x8BDD;&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;&#x62A5;&#x9519;b&#x672A;&#x5B9A;&#x4E49;&#x3002;<br>&#x90A3;&#x4E48;&#x4E3A;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;&#x6211;&#x4EEC;&#x5148;&#x76F4;&#x63A5;&#x6765;&#x505A;&#x51FA;&#x89E3;&#x91CA;&#x5427;&#xFF1A;<br>&#x62FF;&#x5C5E;&#x6027;&#x7684;&#x65F6;&#x5019;&#xFF0C;JS&#x4E2D;&#x662F;&#x901A;&#x8FC7;&#x539F;&#x578B;&#x94FE;&#x4E00;&#x5C42;&#x4E00;&#x5C42;&#x5411;&#x4E0A;&#x904D;&#x5386;&#x53BB;&#x62FF;&#x7684;&#x3002;<br>F&#x7684;&#x539F;&#x578B;&#x94FE; F&#x2192;Function.prototype&#x2192;Object.prototype&#x2192;null&#xFF1B;<br>f&#x7684;&#x539F;&#x578B;&#x94FE;  f&#x2192;F.prototype&#x2192;Object.prototyoe&#x2192;null&#xFF1B;<br>&#x901A;&#x8FC7;&#x539F;&#x578B;&#x94FE;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;F&#x65E2;&#x53EF;&#x4EE5;&#x62FF;&#x5230;a&#x4E5F;&#x53EF;&#x4EE5;&#x62FF;&#x5230;b&#xFF0C;&#x800C;f&#x5374;&#x53EA;&#x80FD;&#x62FF;&#x5230;a&#xFF0C;&#x4E0D;&#x80FD;&#x62FF;&#x5230;b&#x3002;<br>&#x90A3;&#x4E48;&#x4EC0;&#x4E48;&#x662F;&#x539F;&#x578B;&#x94FE;&#xFF0C;&#x4EC0;&#x4E48;&#x662F;&#x539F;&#x578B;&#xFF0C;&#x5176;&#x4E2D;&#x53C8;&#x6709;&#x4EC0;&#x4E48;&#x5BB9;&#x6613;&#x8BA9;&#x4EBA;&#x6DF7;&#x6DC6;&#x5BFC;&#x81F4;&#x7F51;&#x4E0A;&#x7B54;&#x6848;&#x6709;&#x4E0D;&#x4E00;&#x6837;&#x5462;&#xFF1F;<br></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/08/seven-post/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/24/six-post/" itemprop="url">
                   几个Javascript知识点（this,new,提前声明）
                 </a>
@@ -1020,7 +1145,7 @@ return true;
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
